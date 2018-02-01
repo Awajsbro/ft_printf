@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/01/29 19:08:37 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/01 14:33:51 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,62 +64,6 @@ int			ft_printf(char const *s, ...)
 	return (i == -42 ? ft_strlen(str) : -1);
 }
 */
-static size_t	ft_color(char const *s, int *i, short color)
-{
-	if (ft_strnequ(s, "{\rouge}", 7) == 1)
-	{
-		write(1, "\033[31m", 5);
-		color = ((color / 10) * 10) + 1);
-	}
-	else if (ft_strnequ(s, "{\noir}", 6) == 1)
-	{
-		write(1, "\033[30m", 5);
-		color = ((color / 10) * 10) + 0);
-	}
-	else if (ft_strnequ(s, "{\vert}", 6) == 1)
-	{
-		write(1, "\033[32m", 5);
-		color = ((color / 10) * 10) + 2);
-	}
-	else if (ft_strnequ(s, "{\bleu}", 6) == 1)
-	{
-		write(1, "\033[34m", 5);
-		color = ((color / 10) * 10) + 4);
-	}
-	else if (ft_strnequ(s, "{\rose}", 6) == 1)
-	{
-		write(1, "\033[35m", 5);
-		color = ((color / 10) * 10) + 5);
-	}
-	else
-		return (ft_more_color(s, i));
-	*i = *i + 6;
-	return (7);
-}
-
-static size_t	ft_pars_color(char const *s, int *i)
-{
-	static	char	color = 99;
-	static	char	state = 0;
-
-	if (ft_strnequ(s[*i], "{\reset_", 7) == 1)
-	{
-		*i = *i + 7;
-		return (ft_reset_color(s, i, color, state));
-	}
-	else if (ft_strnequ(s[*i], "{\state_", 8) == 1)
-	{
-		*i = *i + 8;
-		return (ft_change_state(s, i, state));
-	}
-	else if (ft_strnequ(s[*i], "{\fond_", 6) == 1)
-	{
-		*i = *i + 6;
-		return (ft_change_back(s, i, color, state));
-	}
-	else
-		return (ft_change_color(s, i, color));
-}
 
 static size_t	ft_pars(char const *s, int *i, va_list va)
 {
