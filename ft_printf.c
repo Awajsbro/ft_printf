@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/01 14:33:51 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/02 19:51:47 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,42 @@ int			ft_printf(char const *s, ...)
 }
 */
 
+static size_t	ft_initarg(char *s, int *i, va_list)
+{
+	char		flg;
+	size_t		wth;
+	size_t		acc;
+	char		lgh[2];
+	int			j;
+
+	j = *i;
+	flg = 0;
+	wth = 0;
+	acc = 0;
+	if (s[j] == 32 || s[j] == '+' || s[j] == '-' || s[j] == '#' || s[j] == '0')
+		flg = s[j];
+	j = flg != 0 ? j++ : j;
+	wth = s[j] == '*' ? va_arg(va, int) : ft_atoi(&s[j]);
+	while (ft_isalpha(s[j]) == 0 || s[j] == '.')
+		j++;
+	acc = s[j] == '*' ? va_arg(va, int) : ft_atoi(&s[j]);
+
+}
+
 static size_t	ft_pars(char const *s, int *i, va_list va)
 {
 	*i = *i + 1;
 	if (s[*i] == '%')
-		return (0);
+	{
+		*i = *i + 1;
+		return (ft_putstr("%"));
+	}
 	else if (s[*i] == '{')
 		return (ft_pars_color(s, i));
+	else if (ft_strnequ(s[*i], "file", 4) == 1)
+		return (print_fd(s, i, va));
 	else
-		*i = -42;
-	return (0);
+		return (ft_initarg(s, i, va));
 }
 
 int		ft_printf(char const *s, ...)
@@ -88,10 +114,10 @@ int		ft_printf(char const *s, ...)
 	while (s[0] != 0)
 	{
 		i = ft_strclen(s, '%');
-		len = len + ft_putstrn(s, i));
+		len = len + ft_putstrn(s, i);
 		if (s[i] == '%')
 			len = len + ft_pars(s, &i, va);
-		if (i == -42);
+		if (i == -42)
 			break;
 		s = s + i;
 	}
