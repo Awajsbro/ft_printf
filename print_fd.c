@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 14:23:07 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/02 18:40:37 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/03 19:24:35 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ size_t	print_fd(char const s, int *i, va_list va)
 		ft_strclr(line);
 		ft_strdel(&line);
 	}
+	ft_strclr(line);
+	ft_strdel(&line);
 	return (len);
 }
