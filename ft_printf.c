@@ -6,109 +6,82 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/02 19:51:47 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/10 20:04:05 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/*
-static char	*ft_wip(char const *s, int *i, char *str, va_list va)
+static int ft_minnb(t_arg *arg, long long n)
 {
-	*i = *i + 1;
-	if (s[*i] == 'c')
-		return (ft_memset(ft_strnew(1), (va_arg(va, int) % 256), 1));
-	else if (s[*i] == 'i' || s[*i] == 'd')
-		return (ft_joinfree(ft_strndup(s, *i - 1), ft_itoa(va_arg(va, int))));
-	return (ft_memalloc(0));
-}
+	int cnt;
 
-static char	*ft_pars(char const *s,int *i, char *str, va_list va)
-{
-	if (s[*i] == 0)
-		return (ft_strdup(s));
-	return (ft_wip(s, i , str, va));
-}
-//
-//static char	*ft_color(char const *s, int *i, char *str)
-//{
-//	static char gras;
-//	static char
-//}
-//
-int			ft_printf(char const *s, ...)
-{
-	va_list	va;
-	int		i;
-	char	*str;
-
-	va_start(va, s);
-	i = 0;
-	str = ft_strnew(0);
-	while (s[i] != 0)
-	{
-		while (!(s[i] == '%' && s[i + 1] != '%') && s[i] != 0 && s[i] != '{')
-			i++;
-		if (s[i] == '{')
-//			str = ft_color(s, &i, str);
-;
-		else
-			str = ft_joinfree(str, ft_pars(s, &i, str, va));
-		if (i == -42)
-			break;
-		s = s[i] != 0 ? s + i + 1 : s + i;
-		i = 0;
-	}
-	va_end(va);
-	ft_putstr(str);
-	return (i == -42 ? ft_strlen(str) : -1);
-}
-*/
-
-static size_t	ft_initarg(char *s, int *i, va_list)
-{
-	char		flg;
-	size_t		wth;
-	size_t		acc;
-	char		lgh[2];
-	int			j;
-
-	j = *i;
-	flg = 0;
-	wth = 0;
-	acc = 0;
-	if (s[j] == 32 || s[j] == '+' || s[j] == '-' || s[j] == '#' || s[j] == '0')
-		flg = s[j];
-	j = flg != 0 ? j++ : j;
-	wth = s[j] == '*' ? va_arg(va, int) : ft_atoi(&s[j]);
-	while (ft_isalpha(s[j]) == 0 || s[j] == '.')
-		j++;
-	acc = s[j] == '*' ? va_arg(va, int) : ft_atoi(&s[j]);
-
-}
-
-static size_t	ft_pars(char const *s, int *i, va_list va)
-{
-	*i = *i + 1;
-	if (s[*i] == '%')
-	{
-		*i = *i + 1;
-		return (ft_putstr("%"));
-	}
-	else if (s[*i] == '{')
-		return (ft_pars_color(s, i));
-	else if (ft_strnequ(s[*i], "file", 4) == 1)
-		return (print_fd(s, i, va));
+	if (arg->spe == 'u' || arg->spe == 'd' ||arg->spe == 'i')
+		cnt = arg->flg ft_cntb(n, 10);
+	else if (arg->spe == 'p' || arg->spe == 'x')
+		cnt = arg->flg == '#' ? ft_cntb(n, 16) + 2 : ft_cntb(n, 16);
 	else
-		return (ft_initarg(s, i, va));
+		cnt = arg->flg == '#' ? ft_cntb(n, 8) + 2 : ft_cntb(n, 8);
+
 }
 
+static int ft_majnb(t_arg arg, long long n)
+
+static int ft_science(t_arg arg, long long n)
+
+static int ft_str()
+
+static char	ft_speci(char const *s, int *i)
+{
+	while (s[*i] == 'h' || s[*i] == 'l' || s[*i] == 'j' || s[*i] == 'z'
+		|| s[*i] == 't' || s[*i] == 'L')
+		(*i)++;
+	(*i)++;
+	return (s[*i - 1]);
+}
+
+static int	ft_initarg(char const *s, int *i, va_list va, t_arg *arg)
+{
+	arg->flg = 0;
+	if (s[*i] == ' ' || s[*i] == '+' || s[*i] == '-'
+		|| s[*i] == '#' || s[*i] == '0')
+		arg->flg = s[*i];
+	*i = arg->flg != 0 ? (*i + 1) : *i;
+	arg->wth = s[*i] == '*' ? va_arg(va, int) : ft_atoi(&s[*i]);
+	while (ft_isdigit(s[*i]) == 1 || s[*i] == '*')
+		(*i)++;
+	if (s[*i] == '.')
+		arg->acc = s[++*i] == '*' ? va_arg(va, int) : ft_atoi(&s[*i]);
+	while (ft_isdigit(s[*i]) == 1 || s[*i] == '*')
+		(*i)++;
+	arg->spe = ft_speci(s, i);
+	if (argv->spe == 'p' )
+		return(ft_exa(arg, (long long)va_arg(va, void*)));
+	if (argv->spe == 'x')
+
+
+}
+
+static int	ft_pars(char const *s, int *i, va_list va, t_arg *arg)
+{
+	(*i)++;
+	if (s[(*i)++] == '%')
+		return (ft_putchar('%'));
+	else if (s[--*i] == '{')
+		return (ft_pars_color(s, i));
+
+	else
+		return (ft_initarg(s, i, va, arg));
+}
 int		ft_printf(char const *s, ...)
 {
-	va_list		va;
-	int			i;
-	long long	len;
+	va_list	va;
+	t_arg	*arg;
+	int		i;
+	int		len;
 
+	if (!(arg = (t_arg*)malloc(sizeof(*arg))))
+		return (0);
 	len = 0;
 	va_start(va, s);
 	while (s[0] != 0)
@@ -116,12 +89,15 @@ int		ft_printf(char const *s, ...)
 		i = ft_strclen(s, '%');
 		len = len + ft_putstrn(s, i);
 		if (s[i] == '%')
-			len = len + ft_pars(s, &i, va);
+			len = len + ft_pars(s, &i, va, arg);
 		if (i == -42)
 			break;
 		s = s + i;
 	}
+	len = len < 0 ? -1 : len;
+	free(arg);
 	va_end(va);
+	write(1, "\033[0m", 4);
 	return (i == -42 ? -1 : len);
 }
 
@@ -129,8 +105,6 @@ int			main(void)
 {
 	int		r;
 
-	r = ft_printf("123||%d||abc -%c-\n", 2147483647, 310);
-	printf("%c\n", 310);
-//	ft_putnbr(r);
+	printf("%d\n", ft_printf("123||%%||%{rou}%{backgr_ble}%{reset_colo} -%%-\n"));
 	return (0);
 }

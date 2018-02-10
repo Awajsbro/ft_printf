@@ -6,13 +6,13 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 17:43:41 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/02 14:23:48 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/08 12:58:48 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	ft_more_back(char const *s, int *i, char *c, char m)
+static char	ft_more_back(char const *s, int *i, char *c, char m)
 {
 	if (ft_strnequ(&s[*i], "ble}", 4) == 1 || (m == 1 && (*c / 10 == 4)))
 	{
@@ -34,11 +34,11 @@ static size_t	ft_more_back(char const *s, int *i, char *c, char m)
 		write(1, "\033[37m", 5);
 		*c = ((*c % 10) + 70);
 	}
-	*i = m == 1 ? *i : (*i + 12);
+	*i = m == 1 ? *i : (*i + 4);
 	return (0);
 }
 
-size_t			ft_printf_back(char const *s, int *i, char *c, char m)
+char			ft_printf_back(char const *s, int *i, char *c, char m)
 {
 	if (ft_strnequ(&s[*i], "noi}", 4) == 1 || (m == 1 && (*c / 10 == 0)))
 	{
@@ -62,11 +62,11 @@ size_t			ft_printf_back(char const *s, int *i, char *c, char m)
 	}
 	else
 		return (ft_more_back(s, i, c, m));
-	*i = m == 1 ? *i : (*i + 12);
+	*i = m == 1 ? *i : (*i + 4);
 	return (0);
 }
 
-static size_t	ft_more_color(char const *s, int *i, char *c, char m)
+static char	ft_more_color(char const *s, int *i, char *c, char m)
 {
 	if (ft_strnequ(&s[*i], "{ble}", 5) == 1 || (m == 1 && (*c % 10 == 4)))
 	{
@@ -88,11 +88,11 @@ static size_t	ft_more_color(char const *s, int *i, char *c, char m)
 		write(1, "\033[37m", 5);
 		*c = (((*c / 10) * 10) + 7);
 	}
-	*i = *i + 5;
+	*i = m == 1 ? *i : (*i + 5);
 	return (0);
 }
 
-size_t			ft_printf_color(char const *s, int *i, char *c, char m)
+char			ft_printf_color(char const *s, int *i, char *c, char m)
 {
 	if (ft_strnequ(&s[*i], "{noi}", 5) == 1 || (m == 1 && (*c % 10 == 0)))
 	{
@@ -116,6 +116,6 @@ size_t			ft_printf_color(char const *s, int *i, char *c, char m)
 	}
 	else
 		return (ft_more_color(s, i, c, m));
-	*i = *i + 5;
+	*i = m == 1 ? *i : (*i + 5);
 	return (0);
 }

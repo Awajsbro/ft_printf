@@ -6,13 +6,13 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 17:44:03 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/01 18:27:17 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/08 13:03:48 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	ft_printf_etat(char const *s, int *i, char *e, char m)
+static char	ft_printf_etat(char const *s, int *i, char *e, char m)
 {
 	if (((ft_strnequ(&s[*i], "gras}", 5) == 1) && ((*e % 2) != 0))
 		|| (m == 1 && ((*e % 2) == 0)))
@@ -32,11 +32,11 @@ static size_t	ft_printf_etat(char const *s, int *i, char *e, char m)
 		write(1, "\033[5m", 4);
 		*e = (*e % 5 == 0) ? *e : *e * 5;
 	}
-	*i = m == 1 ? *i : (*i + 12);
+	*i = m == 1 ? *i : (*i + 5);
 	return (0);
 }
 
-static size_t	ft_printf_reset(char const *s, int *i, char *c, char *e)
+static char	ft_printf_reset(char const *s, int *i, char *c, char *e)
 {
 	write(1, "\033[0m", 4);
 	if (ft_strnequ(&s[*i], "true}", 5) == 1)
@@ -57,21 +57,30 @@ static size_t	ft_printf_reset(char const *s, int *i, char *c, char *e)
 	ft_printf_color(s, i, c, 1);
 	ft_printf_back(s, i, c, 1);
 	ft_printf_etat(s, i, e, 1);
-	*i = *i + 12;
+	*i = *i + 5;
 	return (0);
 }
 
-size_t			ft_pars_color(char const *s, int *i)
+char			ft_pars_color(char const *s, int *i)
 {
 	static	char	color = 99;
 	static	char	etat = 1;
 
 	if (ft_strnequ(&s[*i], "{reset_", 7) == 1)
+	{
+		*i = *i + 7;
 		return (ft_printf_reset(s, i, &color, &etat));
+	}
 	else if (ft_strnequ(&s[*i], "{state_", 7) == 1)
+	{
+		*i = *i + 7;
 		return (ft_printf_etat(s, i, &etat, 0));
+	}
 	else if (ft_strnequ(&s[*i], "{backgr_", 8) == 1)
+	{
+		*i = *i + 8;
 		return (ft_printf_back(s, i, &color, 0));
+	}
 	else
 		return (ft_printf_color(s, i, &color, 0));
 }
