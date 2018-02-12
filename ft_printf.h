@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/10 14:24:16 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/12 18:28:15 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct	s_arg
 }				t_arg;
 
 int				ft_printf(char const *s, ...);
+int				ft_pars_arg(char *s, int *i, va_list va, t_arg *arg);
 char			ft_pars_color(char const *s, int *i);
 char			ft_printf_color(char const *s, int *i, char *c, char m);
 char			ft_printf_back(char const *s, int *i, char *c, char m);
