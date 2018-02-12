@@ -6,13 +6,13 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 17:43:41 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/08 12:58:48 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/12 19:23:55 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	ft_more_back(char const *s, int *i, char *c, char m)
+static void	ft_more_back(char const *s, int *i, char *c, char m)
 {
 	if (ft_strnequ(&s[*i], "ble}", 4) == 1 || (m == 1 && (*c / 10 == 4)))
 	{
@@ -35,10 +35,10 @@ static char	ft_more_back(char const *s, int *i, char *c, char m)
 		*c = ((*c % 10) + 70);
 	}
 	*i = m == 1 ? *i : (*i + 4);
-	return (0);
+	0;
 }
 
-char			ft_printf_back(char const *s, int *i, char *c, char m)
+void		ft_printf_back(char const *s, int *i, char *c, char m)
 {
 	if (ft_strnequ(&s[*i], "noi}", 4) == 1 || (m == 1 && (*c / 10 == 0)))
 	{
@@ -61,12 +61,11 @@ char			ft_printf_back(char const *s, int *i, char *c, char m)
 		*c = ((*c % 10) + 30);
 	}
 	else
-		return (ft_more_back(s, i, c, m));
+		ft_more_back(s, i, c, m);
 	*i = m == 1 ? *i : (*i + 4);
-	return (0);
 }
 
-static char	ft_more_color(char const *s, int *i, char *c, char m)
+static void	ft_more_color(char const *s, int *i, char *c, char m)
 {
 	if (ft_strnequ(&s[*i], "{ble}", 5) == 1 || (m == 1 && (*c % 10 == 4)))
 	{
@@ -89,10 +88,9 @@ static char	ft_more_color(char const *s, int *i, char *c, char m)
 		*c = (((*c / 10) * 10) + 7);
 	}
 	*i = m == 1 ? *i : (*i + 5);
-	return (0);
 }
 
-char			ft_printf_color(char const *s, int *i, char *c, char m)
+void		ft_printf_color(char const *s, int *i, char *c, char m)
 {
 	if (ft_strnequ(&s[*i], "{noi}", 5) == 1 || (m == 1 && (*c % 10 == 0)))
 	{
@@ -115,7 +113,6 @@ char			ft_printf_color(char const *s, int *i, char *c, char m)
 		*c = (((*c / 10) * 10) + 3);
 	}
 	else
-		return (ft_more_color(s, i, c, m));
+		ft_more_color(s, i, c, m);
 	*i = m == 1 ? *i : (*i + 5);
-	return (0);
 }
