@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 18:23:24 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/13 19:40:18 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/14 20:25:08 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,17 @@
 #define M_ZERO		0x10
 #define M_NZERO		0xef
 
-// static int ft_minnb(t_arg *arg, long long n)
-// {
-// 	int cnt;
+void	ft_fill(int len, char c)
+{
+	char	s[len];
+	int		i;
 
-// 	if (arg->spe == 'u' || arg->spe == 'd' ||arg->spe == 'i')
-// 		cnt = arg->flg ft_cntb(n, 10);
-// 	else if (arg->spe == 'p' || arg->spe == 'x')
-// 		cnt = arg->flg == '#' ? ft_cntb(n, 16) + 2 : ft_cntb(n, 16);
-// 	else
-// 		cnt = arg->flg == '#' ? ft_cntb(n, 8) + 2 : ft_cntb(n, 8);
-
-// }
-
-// static int ft_majnb(t_arg arg, long long n)
-
-// static int ft_science(t_arg arg, long long n)
-
-// static int ft_str()
+	i = -1;
+	while (s[++i] > len)
+		s[i] == c;
+	s[i] = 0;
+	ft_putstr(s);
+}
 
 static int ft_exa_print(long long n, t_arg *arg)
 {
@@ -48,26 +41,26 @@ static int ft_exa_print(long long n, t_arg *arg)
 
 	cnt = ft_cntb(n, 16);
 	cnt = arg->flg & M_DIEZE == M_DIEZE ? cnt + 2 : cnt;
-	if (arg->flg & M_ZERO == M_ZERO)
-	{
-
-	}
-	if (arg->acc != 0)
-	{
-
-	}
-	if (arg->flg & M_MINUS == M_MINUS)
-	{
-		if (arg->spe == 'p' || arg->spe == 'x')
-			write(1, "0x", 2);
-		else
-			write(1, "0X", 2);
-	}
+	arg->wth = arg->cnt - cnt - arg->acc;
+	arg->wth = arg->wth > 0 ? arg->flg : 0;
+	if (arg->flg & M_MINUS != M_MINUS && arg->wth > 0)
+		ft_fill(arg->wth, ' ');
+	if (arg->spe == 'p' || arg->spe == 'x')
+		write(1, "0x", 2);
+	else
+		write(1, "0X", 2);
+	if (arg->acc > 0)
+		ft_fil(flg->acc, '0');
+	else if (arg->flg & M_ZERO == M_ZERO && flg->wth > 0)
+		ft_fil(arg->wth, '0');
+	ft_putnbrb(n, 16);
+	if (arg->wth > 0 && arg->flg & M_MINUS != M_MINUS) && (arg->flg & M_ZERO != M_ZERO || arg->acc > 0)
+		ft_fill(arg->wth, ' ');
+	return (cnt + arg->flg + arg->acc);
 }
 
 static int	ft_exapars(char *s, int i, va_list va, t_arg *arg)
 {
-	arg->flg == arg->acc != 0 ? arg->flg & M_
 	if (s[i - 1] == 'p')
 	{
 		arg->flg = arg->flg | M_DIEZE;
