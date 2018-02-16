@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/13 18:04:44 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/16 19:31:38 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,18 @@ static char	ft_flag(char const *s, int *i, t_arg *arg)
 		|| s[*i] == '#' || s[*i] == '0')
 	{
 		if (s[*i] == ' ')
-			arg->flg = arg->flg | M_SPACE;
+			arg->flg = (arg->flg | M_SPACE);
 		else if (s[*i] == '+')
-			arg->flg = arg->flg | M_MORE;
+			arg->flg = (arg->flg | M_MORE);
 		else if (s[*i] == '-')
-			arg->flg = arg->flg | M_MINUS;
+			arg->flg = (arg->flg | M_MINUS);
 		else if (s[*i] == '0')
-			arg->flg = arg->flg | M_ZERO;
+			arg->flg = (arg->flg | M_ZERO);
 		else
-			arg->flg = arg->flg | M_DIEZE;
+			arg->flg = (arg->flg | M_DIEZE);
 		(*i)++;
 	}
-	arg->flg = arg->flg & M_MORE == M_MORE ? arg->flg & M_NSPACE : arg->flg;
-	arg->flg = arg->flg & M_MINUS == M_MINUS ? arg->flg & M_NZERO : arg->flg;
+	arg->flg = (arg->flg & M_MORE) == M_MORE ? (arg->flg & M_NSPACE) : arg->flg;
 	return (arg->flg);
 }
 
@@ -62,6 +61,13 @@ static int	ft_initarg(char const *s, int *i, va_list va, t_arg *arg)
 		(*i)++;
 	(*i)++;
 	arg->spe = (s[*i - 1]);
+	arg->acc = arg->acc >= 0 ? arg->acc : 0;
+	if (arg->wth < 0)
+	{
+		arg->wth = -1 * (arg->wth);
+		arg->flg = (arg->flg & M_MINUS);
+	}
+	arg->flg = (arg->flg & M_MINUS) == M_MINUS ? (arg->flg & M_NZERO) : arg->flg;
 	return (ft_pars_arg(s, *i, va, arg));
 }
 
@@ -71,8 +77,11 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 	if (s[(*i)++] == '%')
 		return (ft_putchar('%'));
 	else if (s[--*i] == '{')
-		return (ft_pars_color(s, i));
-	else
+		{
+			ft_pars_color(s, i);
+			return (0);
+		}
+		else
 		return (ft_initarg(s, i, va, arg));
 }
 
