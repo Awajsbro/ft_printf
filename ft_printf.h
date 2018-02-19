@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/16 19:38:06 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/19 18:25:11 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct	s_arg
 
 int				ft_printf(char const *s, ...);
 int				ft_pars_arg(char const *s, int i, va_list va, t_arg *arg);
+int				ft_exapars(char const *s, int i, va_list va, t_arg *arg);
+void			ft_fill(char *s, int len, char c, char *s2);
 void			ft_pars_color(char const *s, int *i);
 char			ft_printf_color(char const *s, int *i, char *c, char m);
 char			ft_printf_back(char const *s, int *i, char *c, char m);
@@ -57,10 +59,7 @@ char			ft_printf_back(char const *s, int *i, char *c, char m);
 ** {reset_gras}				 -- retire le gras
 ** {reset_soul}				 --	retire le soulignage
 ** {reset_clig}				 --	retire le clignotant
-** {reset_stat}				 --	retire tous les etat gras souligner et clignotant
-**
-** file...					 --	lit (...) lignes d'un fichiers
-** file*					 --	lit (valeur du parametre apres le fd) lignes d'un ficher
+** {reset_stat}				 --	retire gras souligner et clignotant
 */
 
 #endif
