@@ -6,17 +6,22 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/19 17:10:01 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/21 17:26:00 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 #define M_DIEZE		0x01
+#define M_NDIEZE 	0xfe
 #define M_MINUS		0x02
+#define M_NMINUS	0xfd
 #define M_MORE		0x04
+#define M_NMORE		0xfb
 #define M_SPACE		0x08
+#define M_NSPACE	0xf7
 #define M_ZERO		0x10
+#define M_NZERO		0xef
 
 static char	ft_flag(char const *s, int *i, t_arg *arg)
 {
@@ -36,7 +41,7 @@ static char	ft_flag(char const *s, int *i, t_arg *arg)
 			arg->flg = (arg->flg | M_DIEZE);
 		(*i)++;
 	}
-	arg->flg = (arg->flg & M_MORE) == M_MORE ? (arg->flg ^ M_SPACE) : arg->flg;
+	arg->flg = (arg->flg & M_MORE) == M_MORE ? (arg->flg & M_NSPACE) : arg->flg;
 	return (arg->flg);
 }
 

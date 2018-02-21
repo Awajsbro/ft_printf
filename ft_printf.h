@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/19 18:25:11 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/20 17:54:40 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct	s_arg
 	int			acc;
 	char		spe;
 	int			cnt;
+	char		bas;
 }				t_arg;
 
 int				ft_printf(char const *s, ...);
