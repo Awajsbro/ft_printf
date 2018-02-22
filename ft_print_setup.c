@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pars_arg.c                                      :+:      :+:    :+:   */
+/*   ft_print_setup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 18:23:24 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/21 18:07:22 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/22 19:51:57 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-#define M_DIEZE		0x01
-#define M_NDIEZE 	0xfe
-#define M_MINUS		0x02
-#define M_NMINUS	0xfd
-#define M_MORE		0x04
-#define M_NMORE		0xfb
-#define M_SPACE		0x08
-#define M_NSPACE	0xf7
-#define M_ZERO		0x10
-#define M_NZERO		0xef
 
 void	ft_fill(char *s, int len, char c, char *s2)
 {
@@ -51,12 +40,27 @@ void	ft_fill(char *s, int len, char c, char *s2)
 	}
 }
 
-int		ft_pars_arg(char const *s, int i, va_list va, t_arg *arg)
+char	ft_define_fd(char *s, int *i, va_list va, t_arg *arg)
 {
-	if (arg->spe == 'x' || arg->spe == 'X' || arg->spe == 'p'
-		|| arg->spe == 'U' || arg->spe == 'u' || arg->spe == 'o' || arg-> 'O')
-		return (ft_unsigned_pars(s, i, va, arg));
-	else if (arg->spe == 'd' || arg->spe == 'D' || arg->spe == 'i')
-		return (ft_signed_pars(s, i, va, arg));
-	return (ft_putchar(arg->spe));
+	if (ft_strnequ(&s[*i], "[fd", 3) == 1)
+	{
+		*i = *i + 4;
+		if (s[*i - 1] == '*')
+		{
+			(*i)++;
+			arg->fd = va_arg(va, int);
+		}
+		else
+		{
+			arg->fd = ft_atoi(&s[*i - 1]);
+			while (ft_isdigit(s[*i - 1]) == 1)
+				(*i)++;
+		}
+	}
+	else if (ft_strnequ(&s[*i], "[\fd]", 4) == 1)
+	{
+		arg->fd = 1;
+		*i = *i + 5;
+	}
+	return (0);
 }

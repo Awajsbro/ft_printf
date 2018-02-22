@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 19:19:32 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/12 19:22:17 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/22 14:12:03 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	ft_printf_reset(char const *s, int *i, char *c, char *e)
 	*i = *i + 5;
 }
 
-void		ft_pars_color(char const *s, int *i)
+char		ft_pars_color(char const *s, int *i)
 {
 	static	char	color = 99;
 	static	char	etat = 1;
@@ -81,4 +81,5 @@ void		ft_pars_color(char const *s, int *i)
 	}
 	else
 		ft_printf_color(s, i, &color, 0);
+	return (0);
 }

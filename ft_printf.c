@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/21 17:26:00 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/22 19:52:38 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,27 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 	if (s[(*i)++] == '%')
 		return (ft_putchar('%'));
 	else if (s[--*i] == '{')
-	{
-		ft_pars_color(s, i);
-		return (0);
-	}
+		return (ft_pars_color(s, i));
+	else if (s[*i] == '[')
+		return (ft_define_fd(s, i, va, arg));
 	else
-		return (ft_initarg(s, i, va, arg));
+	{
+		ft_initarg(s, i, va, arg);
+		if (arg->spe == 'x' || arg->spe == 'X' || arg->spe == 'p'
+			|| arg->spe == 'U' || arg->spe == 'u'
+				|| arg->spe == 'o' || arg->spe == 'O')
+			return (ft_unsigned_pars(s, &i, va, arg));
+		else if (arg->spe == 'd' || arg->spe == 'D' || arg->spe == 'i')
+			return (ft_signed_pars(s, &i, va, arg));
+		else if ((arg->spe == 'c' || arg->spe == 's') && (s[*i - 2] != 'l'))
+			return (arg->spe == 'c' ? ft_letter_pars(&va_arg(va, int), arg)
+				: ft_letter_pars(va_arg(va, char*), arg));
+		else if (arg->spe == 'C')
+			return (0/*-----------------------------------------------------*/);
+		else if (arg->spe == 'S')
+			return (0/*-----------------------------------------------------*/);
+		return (ft_putchar(arg->spe));
+	}
 }
 
 int			ft_printf(char const *s, ...)
@@ -94,6 +109,7 @@ int			ft_printf(char const *s, ...)
 
 	len = 0;
 	va_start(va, s);
+	arg.fd = 1;
 	while (s[0] != 0)
 	{
 		i = ft_strclen(s, '%');

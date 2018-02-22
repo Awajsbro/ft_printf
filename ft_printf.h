@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/20 17:54:40 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/02/22 19:50:36 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@ typedef struct	s_arg
 	int			wth;
 	int			acc;
 	char		spe;
-	int			cnt;
 	char		bas;
+	int			fd;
 }				t_arg;
 
 int				ft_printf(char const *s, ...);
-int				ft_pars_arg(char const *s, int i, va_list va, t_arg *arg);
-int				ft_exapars(char const *s, int i, va_list va, t_arg *arg);
+int				ft_letter_pars(char *s, t_arg *arg);
+int				ft_buff_exa(long long n, t_arg *arg, char cnt, int len);
+int				ft_buff_octa(long long n, t_arg *arg, char cnt, int len);
+int				ft_buff_deci(long long n, t_arg *arg, char cnt, int len);
+int				ft_buff_bin(long long n, t_arg *arg, char cnt, int len);
+char			ft_define_fd(char *s, int *i, va_list va, t_arg *arg);
 void			ft_fill(char *s, int len, char c, char *s2);
-void			ft_pars_color(char const *s, int *i);
+char			ft_pars_color(char const *s, int *i);
 char			ft_printf_color(char const *s, int *i, char *c, char m);
 char			ft_printf_back(char const *s, int *i, char *c, char m);
 
