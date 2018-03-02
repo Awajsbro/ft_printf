@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_letter_buff.c                                   :+:      :+:    :+:   */
+/*   ft_signed_buff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/22 17:04:25 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/02 14:39:12 by awajsbro         ###   ########.fr       */
+/*   Created: 2018/02/28 16:36:44 by awajsbro          #+#    #+#             */
+/*   Updated: 2018/02/28 16:49:56 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,30 @@
 #define M_ZERO		0x10
 #define M_NZERO		0xef
 
-static int	ft_letter_buff(char *s, t_arg *arg, int len)
+int	ft_buff_deci(long long n, t_arg *arg, char cnt, int len)
 {
 	char	buff[len + 1];
+	char	out[cnt + 1];
 
-	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0)
-	{
-		if ((arg->flg & M_ZERO) != M_ZERO)
-			ft_fill(buff, " ", arg->wth, arg->fd);
-		else
-			ft_fill(buff, "0", arg->wth, arg->fd);
-	}
-	ft_fill(buff, s, 0, arg->fd);
-	if ((arg->flg & M_MINUS) == M_MINUS && arg->wth > 0)
+	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
+		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
+		ft_fill(buff, " ", arg->wth, arg->fd);
+	if (n < 0)
+		ft_fill(buff, "-", 1, arg->fd);
+	else if ((arg->flg & M_MORE) == M_MORE)
+		ft_fill(buff, "+", 1, arg->fd);
+	if (arg->acc > 0)
+		ft_fill(buff, "0", arg->acc, arg->fd);
+	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
+		ft_fill(buff, "0", arg->wth, arg->fd);
+	ft_itoab(n, 10, out);
+	if (n < 0)
+		ft_fill(buff, &out[1], 0, arg->fd);
+	else
+		ft_fill(buff, out, 0, arg->fd);
+	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
+		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);
 	ft_fill(buff, NULL, 0, arg->fd);
 	return (len);
-}
-
-int			ft_letter_pars(char *s, t_arg *arg)
-{
-	int		cnt;
-
-	if (arg->spe == 'c' || arg->acc < 0)
-		cnt = ft_strlen(s);
-	else
-	{
-		cnt = ft_strnlen(s, arg->acc);
-		s[cnt] = 0;
-	}
-	arg->wth = arg->wth - cnt;
-	arg->wth = arg->wth < 0 ? 0 : arg->wth;
-	return (ft_letter_buff(s, arg, (cnt + arg->wth)));
 }

@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/22 19:50:36 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/02 14:47:11 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdarg.h>
 # include "libft/libft.h"
 
+typedef unsigned long long t_ull;
+
 typedef struct	s_arg
 {
 	char		flg;
@@ -24,19 +26,30 @@ typedef struct	s_arg
 	char		spe;
 	char		bas;
 	int			fd;
+	char		fil;
 }				t_arg;
+
+typedef struct	s_col
+{
+	char		*c;
+	char		*e;
+	char		buff[30];
+}				t_col;
 
 int				ft_printf(char const *s, ...);
 int				ft_letter_pars(char *s, t_arg *arg);
-int				ft_buff_exa(long long n, t_arg *arg, char cnt, int len);
-int				ft_buff_octa(long long n, t_arg *arg, char cnt, int len);
+int				ft_unsigned_pars(char const *s, int i, va_list va, t_arg *arg);
+int				ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len);
+int				ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len);
+int				ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len);
+int				ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len);
+int				ft_signed_pars(char const *s, int i, va_list va, t_arg *arg);
 int				ft_buff_deci(long long n, t_arg *arg, char cnt, int len);
-int				ft_buff_bin(long long n, t_arg *arg, char cnt, int len);
-char			ft_define_fd(char *s, int *i, va_list va, t_arg *arg);
-void			ft_fill(char *s, int len, char c, char *s2);
-char			ft_pars_color(char const *s, int *i);
-char			ft_printf_color(char const *s, int *i, char *c, char m);
-char			ft_printf_back(char const *s, int *i, char *c, char m);
+char			ft_define_fd(char const *s, int *i, va_list va, t_arg *arg);
+void			ft_fill(char *s, char *s2, int len, int fd);
+char			ft_pars_color(char const *s, int *i, int fd);
+char			ft_printf_color(char const *s, int *i, t_col *col, char m);
+char			ft_printf_back(char const *s, int *i, t_col *col, char m);
 
 /*
 ** {state_gras}	 =	\033[01m --	active le gras

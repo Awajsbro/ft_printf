@@ -6,41 +6,42 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 18:23:24 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/22 19:51:57 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/02 14:36:55 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_fill(char *s, int len, char c, char *s2)
+void	ft_fill(char *s, char *s2, int len, int fd)
 {
 	static int	i = 0;
 
-	if (c != 0)
+	if (len > 0)
 	{
 		len = len + i;
-		while (i <  len)
+		while (i < len)
 		{
-			s[i] = c;
+			s[i] = s2[0];
 			i++;
 		}
 	}
 	else if (s2 != NULL)
 	{
-		s = ft_strcpy(&s[i], s2);
+		ft_strcpy(&s[i], s2);
 		i = i + ft_strlen(s2);
 	}
 	else
 	{
+		s[i] = 0;
 		i = 0;
 		if (len == 0)
-			ft_putstr(s);
+			ft_putstr_fd(s, fd);
 		else
-			ft_putstr(ft_strupper(s));
+			ft_putstr_fd(ft_strupper(s), fd);
 	}
 }
 
-char	ft_define_fd(char *s, int *i, va_list va, t_arg *arg)
+char	ft_define_fd(char const *s, int *i, va_list va, t_arg *arg)
 {
 	if (ft_strnequ(&s[*i], "[fd", 3) == 1)
 	{

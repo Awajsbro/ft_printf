@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_number_buff.c                                   :+:      :+:    :+:   */
+/*   ft_unsigned_buff.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 16:37:29 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/22 19:53:23 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/02 14:46:49 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,104 +23,95 @@
 #define M_ZERO		0x10
 #define M_NZERO		0xef
 
-int ft_buff_exa(long long n, t_arg *arg, char cnt, int len)
+int	ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len)
 {
-	char	buff[len];
-	char	out[cnt];
+	char	buff[len + 1];
+	char	out[cnt + 1];
 
-	buff[len] = 0;
+	ft_bzero(buff, len);
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, arg->wth, ' ', NULL);
-	if ((arg->flg & M_DIEZE) == M_DIEZE)
-		ft_fill(buff, 2, 0, "0x");
+		ft_fill(buff, " ", arg->wth, arg->fd);
+	if ((arg->flg & M_DIEZE) == M_DIEZE && n != 0)
+		ft_fill(buff, "0x", 0, arg->fd);
 	if (arg->acc > 0)
-		ft_fill(buff, arg->acc, '0', NULL);
+		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, arg->wth, '0', NULL);
-	ft_fill(buff, cnt, 0, ft_itoab(n, 16, out));
+		ft_fill(buff, "0", arg->wth, arg->fd);
+	ft_fill(buff, ft_uitoab(n, 16, out), 0, arg->fd);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, arg->wth, ' ', NULL);
+		ft_fill(buff, " ", arg->wth, arg->fd);
 	if (arg->spe != 'X')
-		ft_fill(buff, 0, 0, NULL);
+		ft_fill(buff, NULL, 0, arg->fd);
 	else
-		ft_fill(buff, 1, 0, NULL);
+		ft_fill(buff, NULL, -1, arg->fd);
 	return (len);
 }
 
-int ft_buff_octa(long long n, t_arg *arg, char cnt, int len)
+int	ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len)
 {
-	char	buff[len];
-	char	out[cnt];
+	char	buff[len + 1];
+	char	out[cnt + 1];
 
-	buff[len] = 0;
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, arg->wth, ' ', NULL);
-	if ((arg->flg & M_DIEZE) == M_DIEZE)
-		ft_fill(buff, 1, '0', NULL);
+		ft_fill(buff, " ", arg->wth, arg->fd);
+	if ((arg->flg & M_DIEZE) == M_DIEZE && n != 0)
+		ft_fill(buff, "0", 1, arg->fd);
 	if (arg->acc > 0)
-		ft_fill(buff, arg->acc, '0', NULL);
+		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, arg->wth, '0', NULL);
-	ft_fill(buff, cnt, 0, ft_itoab(n, 16, out));
+		ft_fill(buff, "0", arg->wth, arg->fd);
+	ft_fill(buff, ft_uitoab(n, 8, out), 0, arg->fd);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, arg->wth, ' ', NULL);
-	return (ft_putstr(buff));
+		ft_fill(buff, " ", arg->wth, arg->fd);
+	ft_fill(buff, NULL, 0, arg->fd);
+	return (len);
 }
 
-int ft_buff_deci(long long n, t_arg *arg, char cnt, int len)
+int	ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len)
 {
-	char	buff[len];
-	char	out[cnt];
+	char	buff[len + 1];
+	char	out[cnt + 1];
 
-	buff[len] = 0;
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, arg->wth, ' ', NULL);
-	if (n < 0)
-		ft_fill(buff, 1, '-', NULL);
-	else if ((arg->flg & M_MORE) == M_MORE)
-		ft_fill(buff, 1, '+', NULL);
+		ft_fill(buff, " ", arg->wth, arg->fd);
 	if (arg->acc > 0)
-		ft_fill(buff, arg->acc, '0', NULL);
+		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, arg->wth, '0', NULL);
-	out = ft_itoab(n, 16, out);
-	if (n < 0)
-		ft_fill(buff, cnt, 0, &out[1]);
-	else
-		ft_fill(buff, cnt, 0, out);
+		ft_fill(buff, "0", arg->wth, arg->fd);
+	ft_fill(buff, ft_itoab(n, 10, out), 0, arg->fd);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, arg->wth, ' ', NULL);
-	return (ft_putstr(buff));
+		ft_fill(buff, " ", arg->wth, arg->fd);
+	ft_fill(buff, NULL, 0, arg->fd);
+	return (len);
 }
 
-int ft_buff_bin(long long n, t_arg *arg, char cnt, int len)
+int	ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len)
 {
-	char	buff[len];
-	char	out[cnt];
+	char	buff[len + 1];
+	char	out[cnt + 1];
 
-	buff[len] = 0;
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, arg->wth, ' ', NULL);
-	if ((arg->flg & M_DIEZE) == M_DIEZE)
-		ft_fill(buff, 2, 0, "0b");
+		ft_fill(buff, " ", arg->wth, arg->fd);
+	if ((arg->flg & M_DIEZE) == M_DIEZE && n != 0)
+		ft_fill(buff, "0b", 0, arg->fd);
 	if (arg->acc > 0)
-		ft_fill(buff, arg->acc, '0', NULL);
+		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, arg->wth, '0', NULL);
-	ft_fill(buff, cnt, 0, ft_itoab(n, 16, out));
+		ft_fill(buff, "0", arg->wth, arg->fd);
+	ft_fill(buff, ft_uitoab(n, 2, out), 0, arg->fd);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, arg->wth, ' ', NULL);
-		if (arg->spe == 'b')
-		ft_fill(buff, 0, 0, NULL);
+		ft_fill(buff, " ", arg->wth, arg->fd);
+	if (arg->spe == 'b')
+		ft_fill(buff, NULL, 0, arg->fd);
 	else
-		ft_fill(buff, 1, 0, NULL);
+		ft_fill(buff, NULL, -1, arg->fd);
 	return (len);
 }

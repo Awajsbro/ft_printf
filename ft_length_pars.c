@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 18:27:43 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/21 18:07:17 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/02 15:08:42 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #define M_ZERO		0x10
 #define M_NZERO		0xef
 
-static int ft_unsigned_cnt(long long n, t_arg *arg)
+static int	ft_unsigned_cnt(long long n, t_arg *arg)
 {
 	char cnt;
 
@@ -43,7 +43,7 @@ static int ft_unsigned_cnt(long long n, t_arg *arg)
 	if (arg->bas == 16)
 		return (ft_buff_exa(n, arg, cnt, (cnt + arg->acc + arg->wth)));
 	else if (arg->bas == 10)
-		return (ft_buff_deci(n, arg, cnt, (cnt + arg->acc + arg->wth)));
+		return (ft_buff_udeci(n, arg, cnt, (cnt + arg->acc + arg->wth)));
 	else if (arg->bas == 8)
 		return (ft_buff_octa(n, arg, cnt, (cnt + arg->acc + arg->wth)));
 	else if (arg->bas == 2)
@@ -57,10 +57,10 @@ int			ft_unsigned_pars(char const *s, int i, va_list va, t_arg *arg)
 	if (s[i - 1] == 'p')
 	{
 		arg->flg = (arg->flg | M_DIEZE);
-		return(ft_unisgned_cnt((long long)va_arg(va, void*), arg));
+		return (ft_unsigned_cnt((long long)va_arg(va, void*), arg));
 	}
 	else if (s[i - 2] == 'l' && s[i - 3] == 'l')
-		return (ft_unsigned_cnt(va_arg(va, unsigned long long), arg));
+		return (ft_unsigned_cnt(va_arg(va, t_ull), arg));
 	else if (s[i - 2] == 'l' || arg->spe == 'O' || arg->spe == 'U')
 		return (ft_unsigned_cnt(va_arg(va, unsigned long), arg));
 	else if (s[i - 2] == 'h' && s[i - 3] != 'h')
@@ -73,10 +73,10 @@ int			ft_unsigned_pars(char const *s, int i, va_list va, t_arg *arg)
 		return (ft_unsigned_cnt(va_arg(va, size_t), arg));
 	else if (s[i - 2] == 't')
 		return (ft_unsigned_cnt(va_arg(va, ptrdiff_t), arg));
-    return (ft_unsigned_cnt(va_arg(va, unsigned int), arg));
+	return (ft_unsigned_cnt(va_arg(va, unsigned int), arg));
 }
 
-static int ft_signed_cnt(long long n, t_arg *arg)
+static int	ft_signed_cnt(long long n, t_arg *arg)
 {
 	char cnt;
 
@@ -108,5 +108,5 @@ int			ft_signed_pars(char const *s, int i, va_list va, t_arg *arg)
 		return (ft_signed_cnt(va_arg(va, size_t), arg));
 	else if (s[i - 2] == 't')
 		return (ft_signed_cnt(va_arg(va, ptrdiff_t), arg));
-    return (ft_signed_cnt(va_arg(va, int), arg));
+	return (ft_signed_cnt(va_arg(va, int), arg));
 }
