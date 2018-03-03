@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/02 15:32:16 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/03 16:58:13 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ static void	ft_initarg(char const *s, int *i, va_list va, t_arg *arg)
 	while (s[*i] == 'h' || s[*i] == 'l' || s[*i] == 'j' || s[*i] == 'z'
 		|| s[*i] == 't' || s[*i] == 'L')
 		(*i)++;
-	(*i)++;
-	arg->spe = (s[*i - 1]);
+	arg->spe = (s[(*i)++]);
+	if (arg->spe == 0)
+		(*i)--;
 	if (arg->wth < 0)
 	{
 		arg->wth = -1 * (arg->wth);
@@ -79,7 +80,7 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 		return (ft_define_fd(s, i, va, arg));
 	ft_initarg(s, i, va, arg);
 	if (arg->spe == '%')
-		return (ft_letter_pars("%", arg));
+		return (ft_letter_pars('%', arg));
 	else if (arg->spe == 'x' || arg->spe == 'X' || arg->spe == 'p'
 		|| arg->spe == 'U' || arg->spe == 'u' || arg->spe == 'o'
 			|| arg->spe == 'O' || arg->spe == 'b' || arg->spe == 'B')
@@ -87,15 +88,13 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 	else if (arg->spe == 'd' || arg->spe == 'D' || arg->spe == 'i')
 		return (ft_signed_pars(s, *i, va, arg));
 	else if ((arg->spe == 'c' || arg->spe == 's') && (s[*i - 2] != 'l'))
-		return (arg->spe != 'c' ? ft_letter_pars(va_arg(va, char*), arg)
-			: ft_letter_pars(ft_memset(" ", va_arg(va, int), 1), arg));
-	else if (arg->spe == 'C')
-		return (0);
-	else if (arg->spe == 'S')
-		return (0);
-	else if (arg->spe == 0)
-		exit(EXIT_SUCCESS);
-	return (ft_putchar(arg->spe));
+		return (arg->spe != 'c' ? ft_str_pars(va_arg(va, char*), arg)
+			: ft_letter_pars(va_arg(va, int), arg));
+	// else if (arg->spe == 'C' || arg->spe == 'c')
+	// 	return (0);
+	// else if (arg->spe == 'S' || arg->spe == 's')
+	// 	return (0);
+	return (ft_letter_pars(arg->spe, arg));
 }
 
 int			ft_printf(char const *s, ...)

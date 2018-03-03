@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 18:27:43 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/02 15:08:42 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/03 15:30:39 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,25 @@ static int	ft_unsigned_cnt(long long n, t_arg *arg)
 	char cnt;
 
 	if (arg->spe == 'p' || arg->spe == 'x' || arg->spe == 'X')
-		arg->bas = 16;
+		arg->base = 16;
 	else if (arg->spe == 'o' || arg->spe == 'O')
-		arg->bas = 8;
+		arg->base = 8;
 	else if (arg->spe == 'u' || arg->spe == 'U')
-		arg->bas = 10;
+		arg->base = 10;
 	else if (arg->spe == 'b' || arg->spe == 'B')
-		arg->bas = 2;
-	cnt = ft_cntb(n, arg->bas);
+		arg->base = 2;
+	cnt = ft_cntb(n, arg->base);
 	arg->acc = arg->acc > cnt ? arg->acc - cnt : 0;
 	cnt = (arg->flg & M_DIEZE) == M_DIEZE ? cnt + 2 : cnt;
 	arg->wth = arg->wth - cnt - arg->acc;
 	arg->wth = arg->wth > 0 ? arg->wth : 0;
-	if (arg->bas == 16)
+	if (arg->base == 16)
 		return (ft_buff_exa(n, arg, cnt, (cnt + arg->acc + arg->wth)));
-	else if (arg->bas == 10)
+	else if (arg->base == 10)
 		return (ft_buff_udeci(n, arg, cnt, (cnt + arg->acc + arg->wth)));
-	else if (arg->bas == 8)
+	else if (arg->base == 8)
 		return (ft_buff_octa(n, arg, cnt, (cnt + arg->acc + arg->wth)));
-	else if (arg->bas == 2)
+	else if (arg->base == 2)
 		return (ft_buff_bin(n, arg, cnt, (cnt + arg->acc + arg->wth)));
 	return (0);
 }
@@ -80,8 +80,8 @@ static int	ft_signed_cnt(long long n, t_arg *arg)
 {
 	char cnt;
 
-	arg->bas = 10;
-	cnt = ft_cntb(n, arg->bas);
+	arg->base = 10;
+	cnt = ft_cntb(n, arg->base);
 	arg->acc = arg->acc > cnt ? arg->acc - cnt : 0;
 	if (n < 0)
 		cnt++;

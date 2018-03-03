@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 16:37:29 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/02 14:46:49 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/03 17:05:57 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len)
 	char	buff[len + 1];
 	char	out[cnt + 1];
 
-	ft_bzero(buff, len);
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
 		ft_fill(buff, " ", arg->wth, arg->fd);
@@ -43,10 +42,9 @@ int	ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);
 	if (arg->spe != 'X')
-		ft_fill(buff, NULL, 0, arg->fd);
+		return (ft_fill(buff, NULL, 0, arg->fd));
 	else
-		ft_fill(buff, NULL, -1, arg->fd);
-	return (len);
+		return (ft_fill(buff, NULL, -1, arg->fd));
 }
 
 int	ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len)
@@ -67,8 +65,7 @@ int	ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len)
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);
-	ft_fill(buff, NULL, 0, arg->fd);
-	return (len);
+	return (ft_fill(buff, NULL, 0, arg->fd));
 }
 
 int	ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len)
@@ -87,8 +84,7 @@ int	ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len)
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);
-	ft_fill(buff, NULL, 0, arg->fd);
-	return (len);
+	return (ft_fill(buff, NULL, 0, arg->fd));
 }
 
 int	ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len)
@@ -110,8 +106,7 @@ int	ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);
 	if (arg->spe == 'b')
-		ft_fill(buff, NULL, 0, arg->fd);
+		return (ft_fill(buff, NULL, 0, arg->fd));
 	else
-		ft_fill(buff, NULL, -1, arg->fd);
-	return (len);
+		return (ft_fill(buff, NULL, -1, arg->fd));
 }

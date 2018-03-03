@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/02 14:47:11 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/03 16:03:19 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	s_arg
 	int			wth;
 	int			acc;
 	char		spe;
-	char		bas;
+	char		base;
 	int			fd;
 	char		fil;
 }				t_arg;
@@ -37,7 +37,8 @@ typedef struct	s_col
 }				t_col;
 
 int				ft_printf(char const *s, ...);
-int				ft_letter_pars(char *s, t_arg *arg);
+int				ft_letter_pars(int c, t_arg *arg);
+int				ft_str_pars(char *s, t_arg *arg);
 int				ft_unsigned_pars(char const *s, int i, va_list va, t_arg *arg);
 int				ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len);
@@ -46,7 +47,7 @@ int				ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_signed_pars(char const *s, int i, va_list va, t_arg *arg);
 int				ft_buff_deci(long long n, t_arg *arg, char cnt, int len);
 char			ft_define_fd(char const *s, int *i, va_list va, t_arg *arg);
-void			ft_fill(char *s, char *s2, int len, int fd);
+int				ft_fill(char *s, char *s2, int len, int fd);
 char			ft_pars_color(char const *s, int *i, int fd);
 char			ft_printf_color(char const *s, int *i, t_col *col, char m);
 char			ft_printf_back(char const *s, int *i, t_col *col, char m);

@@ -6,13 +6,13 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 18:23:24 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/02 14:36:55 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/03 17:07:09 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_fill(char *s, char *s2, int len, int fd)
+int		ft_fill(char *s, char *s2, int len, int fd)
 {
 	static int	i = 0;
 
@@ -35,10 +35,10 @@ void	ft_fill(char *s, char *s2, int len, int fd)
 		s[i] = 0;
 		i = 0;
 		if (len == 0)
-			ft_putstr_fd(s, fd);
-		else
-			ft_putstr_fd(ft_strupper(s), fd);
+			return (ft_putstr_fd(s, fd));
+		return (ft_putstr_fd(ft_strupper(s), fd));
 	}
+	return (0);
 }
 
 char	ft_define_fd(char const *s, int *i, va_list va, t_arg *arg)

@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 17:04:25 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/02 14:39:12 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/03 17:27:56 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,36 @@ static int	ft_letter_buff(char *s, t_arg *arg, int len)
 	return (len);
 }
 
-int			ft_letter_pars(char *s, t_arg *arg)
+int			ft_str_pars(char *s, t_arg *arg)
 {
 	int		cnt;
+	char	nullstr[7];
 
-	if (arg->spe == 'c' || arg->acc < 0)
-		cnt = ft_strlen(s);
+	if (s == NULL)
+	{
+		ft_strcpy(nullstr, "(null)");
+		cnt = arg->acc < 0 ? 6 : ft_strnlen(nullstr, arg->acc);
+		nullstr[cnt] = 0;
+	}
 	else
 	{
-		cnt = ft_strnlen(s, arg->acc);
+		cnt = arg->acc < 0 ? ft_strlen(s) : ft_strnlen(s, arg->acc);
 		s[cnt] = 0;
 	}
 	arg->wth = arg->wth - cnt;
 	arg->wth = arg->wth < 0 ? 0 : arg->wth;
+	if (s == NULL)
+		return (ft_letter_buff(nullstr, arg, (cnt + arg->wth)));
 	return (ft_letter_buff(s, arg, (cnt + arg->wth)));
+}
+
+int			ft_letter_pars(int c, t_arg *arg)
+{
+	char	s[2];
+
+	s[0] = c + 0;
+	s[1] = 0;
+	arg->wth = arg->wth - 1;
+	arg->wth = arg->wth < 0 ? 0 : arg->wth;
+	return (ft_letter_buff(s, arg, 1 + arg->wth));
 }
