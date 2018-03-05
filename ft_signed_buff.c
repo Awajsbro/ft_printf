@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 16:36:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:12:23 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:18:23 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,24 @@ int	ft_buff_deci(long long n, t_arg *arg, char cnt, int len)
 
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, " ", arg->wth, arg->fd);
+		ft_fill(buff, " ", arg->wth);
 	if (n < 0)
-		ft_fill(buff, "-", 1, arg->fd);
+		ft_fill(buff, "-", 1);
 	else if ((arg->flg & M_MORE) == M_MORE)
-		ft_fill(buff, "+", 1, arg->fd);
+		ft_fill(buff, "+", 1);
 	if (arg->acc > 0)
-		ft_fill(buff, "0", arg->acc, arg->fd);
+		ft_fill(buff, "0", arg->acc);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, "0", arg->wth, arg->fd);
+		ft_fill(buff, "0", arg->wth);
 	if (n != 0 || arg->acc != 0)
 		ft_itoab(n, 10, out);
 	if (n < 0)
-		ft_fill(buff, &out[1], 0, arg->fd);
+		ft_fill(buff, &out[1], 0);
 	else
-		ft_fill(buff, out, 0, arg->fd);
+		ft_fill(buff, out, 0);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, " ", arg->wth, arg->fd);
-	ft_fill(NULL, NULL, 0, 0)
-	return (ft_putstr(buff));
+		ft_fill(buff, " ", arg->wth);
+	ft_fill(NULL, NULL, 0);
+	return (ft_putstr_fd(buff, arg->fd));
 }

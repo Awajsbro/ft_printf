@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/03 16:03:19 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:19:44 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int				ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_signed_pars(char const *s, int i, va_list va, t_arg *arg);
 int				ft_buff_deci(long long n, t_arg *arg, char cnt, int len);
 char			ft_define_fd(char const *s, int *i, va_list va, t_arg *arg);
-int				ft_fill(char *s, char *s2, int len, int fd);
+int				ft_fill(char *s, char *s2, int len);
 char			ft_pars_color(char const *s, int *i, int fd);
 char			ft_printf_color(char const *s, int *i, t_col *col, char m);
 char			ft_printf_back(char const *s, int *i, t_col *col, char m);

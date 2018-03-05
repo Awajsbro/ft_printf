@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 17:04:25 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:06:59 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:18:45 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ static int	ft_letter_buff(char *s, t_arg *arg, int len)
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0)
 	{
 		if ((arg->flg & M_ZERO) != M_ZERO)
-			ft_fill(buff, " ", arg->wth, arg->fd);
+			ft_fill(buff, " ", arg->wth);
 		else
-			ft_fill(buff, "0", arg->wth, arg->fd);
+			ft_fill(buff, "0", arg->wth);
 	}
-	ft_fill(buff, s, 0, arg->fd);
+	ft_fill(buff, s, 0);
 	if ((arg->flg & M_MINUS) == M_MINUS && arg->wth > 0)
-		ft_fill(buff, " ", arg->wth, arg->fd);
-	return (ft_putstr(buff));
+		ft_fill(buff, " ", arg->wth);
+	ft_fill(NULL, NULL, 0);
+	return (ft_putstr_fd(buff, arg->fd));
 }
 
 int			ft_str_pars(char *s, t_arg *arg)

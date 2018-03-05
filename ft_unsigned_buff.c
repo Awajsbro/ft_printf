@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 16:37:29 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:12:16 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:20:12 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,23 @@ int	ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len)
 
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, " ", arg->wth, arg->fd);
+		ft_fill(buff, " ", arg->wth);
 	if ((arg->flg & M_DIEZE) == M_DIEZE && n != 0)
-		ft_fill(buff, "0x", 0, arg->fd);
+		ft_fill(buff, "0x", 0);
 	if (arg->acc > 0)
-		ft_fill(buff, "0", arg->acc, arg->fd);
+		ft_fill(buff, "0", arg->acc);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, "0", arg->wth, arg->fd);
+		ft_fill(buff, "0", arg->wth);
 	if (n != 0 | arg->acc != 0)
-		ft_fill(buff, ft_uitoab(n, 16, out), 0, arg->fd);
+		ft_fill(buff, ft_uitoab(n, 16, out), 0);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, " ", arg->wth, arg->fd);
-	ft_fill(NULL, NULL, 0, 0)
+		ft_fill(buff, " ", arg->wth);
+	ft_fill(NULL, NULL, 0);
 	if (arg->spe != 'X')
-		return (ft_putstr_fd(buff), arg->fd);
+		return (ft_putstr_fd(buff, arg->fd));
 	else
-		return (ft_putstr_fd(ft_strupper(buff)), arg->fd);
+		return (ft_putstr_fd(ft_strupper(buff), arg->fd));
 }
 
 int	ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len)
@@ -56,20 +56,20 @@ int	ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len)
 
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, " ", arg->wth, arg->fd);
+		ft_fill(buff, " ", arg->wth);
 	if ((arg->flg & M_DIEZE) == M_DIEZE && n != 0)
-		ft_fill(buff, "0", 1, arg->fd);
+		ft_fill(buff, "0", 1);
 	if (arg->acc > 0)
-		ft_fill(buff, "0", arg->acc, arg->fd);
+		ft_fill(buff, "0", arg->acc);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, "0", arg->wth, arg->fd);
+		ft_fill(buff, "0", arg->wth);
 	if (n != 0 | arg->acc != 0)
-		ft_fill(buff, ft_uitoab(n, 8, out), 0, arg->fd);
+		ft_fill(buff, ft_uitoab(n, 8, out), 0);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, " ", arg->wth, arg->fd);
-	ft_fill(NULL, NULL, 0, 0)
-	return (ft_putstr_fd(buff), arg->fd);
+		ft_fill(buff, " ", arg->wth);
+	ft_fill(NULL, NULL, 0);
+	return (ft_putstr_fd(buff, arg->fd));
 }
 
 int	ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len)
@@ -79,18 +79,18 @@ int	ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len)
 
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, " ", arg->wth, arg->fd);
+		ft_fill(buff, " ", arg->wth);
 	if (arg->acc > 0)
-		ft_fill(buff, "0", arg->acc, arg->fd);
+		ft_fill(buff, "0", arg->acc);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, "0", arg->wth, arg->fd);
+		ft_fill(buff, "0", arg->wth);
 	if (n != 0 | arg->acc != 0)
-		ft_fill(buff, ft_uitoab(n, 10, out), 0, arg->fd);
+		ft_fill(buff, ft_uitoab(n, 10, out), 0);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, " ", arg->wth, arg->fd);
-	ft_fill(NULL, NULL, 0, 0)
-	return (ft_putstr_fd(buff), arg->fd);
+		ft_fill(buff, " ", arg->wth);
+	ft_fill(NULL, NULL, 0);
+	return (ft_putstr_fd(buff, arg->fd));
 }
 
 int	ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len)
@@ -100,21 +100,21 @@ int	ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len)
 
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
-		ft_fill(buff, " ", arg->wth, arg->fd);
+		ft_fill(buff, " ", arg->wth);
 	if ((arg->flg & M_DIEZE) == M_DIEZE && n != 0)
-		ft_fill(buff, "0b", 0, arg->fd);
+		ft_fill(buff, "0b", 0);
 	if (arg->acc > 0)
-		ft_fill(buff, "0", arg->acc, arg->fd);
+		ft_fill(buff, "0", arg->acc);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
-		ft_fill(buff, "0", arg->wth, arg->fd);
+		ft_fill(buff, "0", arg->wth);
 	if (n != 0 | arg->acc != 0)
-		ft_fill(buff, ft_uitoab(n, 2, out), 0, arg->fd);
+		ft_fill(buff, ft_uitoab(n, 2, out), 0);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
-		ft_fill(buff, " ", arg->wth, arg->fd);
-	ft_fill(NULL, NULL, 0, 0)
+		ft_fill(buff, " ", arg->wth);
+	ft_fill(NULL, NULL, 0);
 	if (arg->spe == 'b')
-		return (ft_putstr_fd(buff), arg->fd);
+		return (ft_putstr_fd(buff, arg->fd));
 	else
-		return (ft_putstr_fd(ft_strupper(buff)), arg->fd);
+		return (ft_putstr_fd(ft_strupper(buff), arg->fd));
 }

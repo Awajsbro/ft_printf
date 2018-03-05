@@ -6,13 +6,13 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 18:23:24 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:10:34 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:19:27 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_fill(char *s, char *s2, int len, int fd)
+int		ft_fill(char *s, char *s2, int len)
 {
 	static int	i = 0;
 
