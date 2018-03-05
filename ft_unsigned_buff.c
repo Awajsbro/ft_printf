@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 16:37:29 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/03 17:05:57 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/05 18:51:40 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len)
 		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
 		ft_fill(buff, "0", arg->wth, arg->fd);
-	ft_fill(buff, ft_uitoab(n, 16, out), 0, arg->fd);
+	if (n != 0 | arg->acc != 0)
+		ft_fill(buff, ft_uitoab(n, 16, out), 0, arg->fd);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);
@@ -61,7 +62,8 @@ int	ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len)
 		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
 		ft_fill(buff, "0", arg->wth, arg->fd);
-	ft_fill(buff, ft_uitoab(n, 8, out), 0, arg->fd);
+	if (n != 0 | arg->acc != 0)
+		ft_fill(buff, ft_uitoab(n, 8, out), 0, arg->fd);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);
@@ -80,7 +82,8 @@ int	ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len)
 		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
 		ft_fill(buff, "0", arg->wth, arg->fd);
-	ft_fill(buff, ft_itoab(n, 10, out), 0, arg->fd);
+	if (n != 0 | arg->acc != 0)
+		ft_fill(buff, ft_uitoab(n, 10, out), 0, arg->fd);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);
@@ -101,7 +104,8 @@ int	ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len)
 		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
 		ft_fill(buff, "0", arg->wth, arg->fd);
-	ft_fill(buff, ft_uitoab(n, 2, out), 0, arg->fd);
+	if (n != 0 | arg->acc != 0)
+		ft_fill(buff, ft_uitoab(n, 2, out), 0, arg->fd);
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth, arg->fd);

@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 16:36:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/02/28 16:49:56 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:03:33 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	ft_buff_deci(long long n, t_arg *arg, char cnt, int len)
 		ft_fill(buff, "0", arg->acc, arg->fd);
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
 		ft_fill(buff, "0", arg->wth, arg->fd);
-	ft_itoab(n, 10, out);
+	if (n != 0 || arg->acc != 0)
+		ft_itoab(n, 10, out);
 	if (n < 0)
 		ft_fill(buff, &out[1], 0, arg->fd);
 	else
