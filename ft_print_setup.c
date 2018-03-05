@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 18:23:24 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:03:23 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:10:34 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ int		ft_fill(char *s, char *s2, int len, int fd)
 	{
 		s[i] = 0;
 		i = 0;
-		if (len == 0)
-			return (ft_putstr_fd(s, fd));
-		return (ft_putstr_fd(ft_strupper(s), fd));
 	}
 	return (0);
 }
