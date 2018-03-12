@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 16:36:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:18:23 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/12 16:45:13 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int	ft_buff_deci(long long n, t_arg *arg, char cnt, int len)
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth);
-	ft_fill(NULL, NULL, 0);
+	ft_fill(buff, NULL, 0);
 	return (ft_putstr_fd(buff, arg->fd));
 }

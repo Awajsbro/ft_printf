@@ -6,7 +6,7 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/28 16:56:20 by awajsbro          #+#    #+#              #
-#    Updated: 2018/03/02 15:07:54 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/03/12 16:45:47 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,17 +34,20 @@ all : $(NAME)
 
 $(NAME) :
 	@$(MAKE) -C $(LIB_DIR)
-	gcc -Wextra -Wall -Werror -c $(SRC)
-	ar rc $(TMP) $(OBJ)
-	libtool -static -o $(NAME) $(TMP) $(LIBFT)
-	rm -f $(TMP)
-	ranlib $(NAME)
+	@gcc -Wextra -Wall -Werror -c $(SRC)
+	@ar rc $(TMP) $(OBJ)
+	@libtool -static -o $(NAME) $(TMP) $(LIBFT)
+	@rm -f $(TMP)
+	@ranlib $(NAME)
+	@echo "\033[36m	LIBFTPRINTF.A\033[33m ====\033[1m> \033[32;1mREADY TO USE\033[0m"
 
 clean :
-	$(MAKE) clean -C $(LIB_DIR)
-	rm -f $(OBJ)
+	@$(MAKE) clean -C $(LIB_DIR)
+	@rm -f $(OBJ)
+	@echo "\033[31;1m	CLEANING DONE\033[0m"
 
 fclean : clean
-	rm -f $(NAME) $(LIBFT)
+	@rm -f $(NAME) $(LIBFT)
+	@echo "\033[36m	LIBFTPRINTF.A\033[33m ====\033[1m> \033[31;1mDELETED\033[0m"
 
 re : fclean all

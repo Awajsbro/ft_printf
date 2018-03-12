@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/03 16:58:13 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/12 19:44:23 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@
 #define M_ZERO		0x10
 #define M_NZERO		0xef
 
-static char	ft_flag(char const *s, int *i, t_arg *arg)
+static char	ft_get_flag(char const *s, int *i, t_arg *arg)
 {
-	arg->flg = 0;
 	while (s[*i] == ' ' || s[*i] == '+' || s[*i] == '-'
 		|| s[*i] == '#' || s[*i] == '0')
 	{
@@ -45,21 +44,61 @@ static char	ft_flag(char const *s, int *i, t_arg *arg)
 	return (arg->flg);
 }
 
-static void	ft_initarg(char const *s, int *i, va_list va, t_arg *arg)
+static int ft_get_with_n_accur(char const *s, int *i, va_list va)
 {
+	int	ret;
+
+	ret = 0;
+	while (s[++(*i)] == '*' || ft_isdigit(s[*i]) == 1)
+	{
+		if (s[*i] == '*')
+			ret = va_arg(va, int);
+		else
+		{
+			ret = ft_atoi(&s[*i]);
+			while (ft_isdigit(s[*i + 1]) == 1)
+				(*i)++;
+		}
+	}
+	return (ret);
+}
+
+static void	ft_get_arg(char const *s, int *i, va_list va, t_arg *arg)
+{
+	while (s[*i] == ' ' || s[*i] == '+' || s[*i] == '-' || s[*i] == '#'
+		|| s[*i] == '*' || s[*i] == '.' || s[*i] == 'h' || s[*i] == 'l'
+			|| s[*i] == 'j' || s[*i] == 'z' || s[*i] == 't' || s[*i] == 'L'
+				|| ft_isdigit(s[*i]) == 1)
+	{
+		arg->flg = ft_get_flag(s, i, arg);
+ft_putnbr(*i);
+		if (ft_isdigit(s[*i]) == 1 || s[*i--] == '*')
+			arg->wth = ft_get_with_n_accur(s, i, va);
+		else
+			(*i)++;
+ft_putnbr(*i);
+		if (s[*i] == '.')
+			arg->acc = ft_get_with_n_accur(s, i, va);
+		while (s[*i] == 'h' || s[*i] == 'l' || s[*i] == 'j' || s[*i] == 'z'
+			|| s[*i] == 't' || s[*i] == 'L')
+			(*i)++;
+	}
+	ft_putnbr(*i);
+}
+
+static void ft_init_arg(char const *s, int *i, va_list va, t_arg *arg)
+{
+	arg->flg = 0;
+	arg->wth = 0;
 	arg->acc = -1;
-	arg->flg = ft_flag(s, i, arg);
-	arg->wth = s[*i] == '*' ? va_arg(va, int) : ft_atoi(&s[*i]);
-	while (ft_isdigit(s[*i]) == 1 || s[*i] == '*')
-		(*i)++;
-	if (s[*i] == '.')
-		arg->acc = s[++*i] == '*' ? va_arg(va, int) : ft_atoi(&s[*i]);
-	while (ft_isdigit(s[*i]) == 1 || s[*i] == '*')
-		(*i)++;
-	while (s[*i] == 'h' || s[*i] == 'l' || s[*i] == 'j' || s[*i] == 'z'
-		|| s[*i] == 't' || s[*i] == 'L')
-		(*i)++;
+ft_putnbr(*i);
+	ft_get_arg(s, i, va, arg);
+ft_putnbr(*i);
 	arg->spe = (s[(*i)++]);
+ft_putchar(arg->spe); ft_putendl(" --> specifiere");
+// ft_putnbr(arg->flg); ft_putendl(" --> flag");
+ft_putnbr(arg->wth); ft_putendl(" --> wth");
+// ft_putnbr(arg->acc); ft_putendl(" --> acc");
 	if (arg->spe == 0)
 		(*i)--;
 	if (arg->wth < 0)
@@ -67,7 +106,7 @@ static void	ft_initarg(char const *s, int *i, va_list va, t_arg *arg)
 		arg->wth = -1 * (arg->wth);
 		arg->flg = (arg->flg | M_MINUS);
 	}
-	if ((arg->flg & M_MINUS) == M_MINUS)
+	if ((arg->flg & M_MINUS) == M_MINUS || (arg->flg & M_SPACE) == M_SPACE)
 		arg->flg = (arg->flg & M_NZERO);
 }
 
@@ -78,7 +117,7 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 		return (ft_pars_color(s, i, arg->fd));
 	else if (s[*i] == '[')
 		return (ft_define_fd(s, i, va, arg));
-	ft_initarg(s, i, va, arg);
+	ft_init_arg(s, i, va, arg);
 	if (arg->spe == '%')
 		return (ft_letter_pars('%', arg));
 	else if (arg->spe == 'x' || arg->spe == 'X' || arg->spe == 'p'
@@ -90,10 +129,12 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 	else if ((arg->spe == 'c' || arg->spe == 's') && (s[*i - 2] != 'l'))
 		return (arg->spe != 'c' ? ft_str_pars(va_arg(va, char*), arg)
 			: ft_letter_pars(va_arg(va, int), arg));
-	// else if (arg->spe == 'C' || arg->spe == 'c')
-	// 	return (0);
-	// else if (arg->spe == 'S' || arg->spe == 's')
-	// 	return (0);
+	else if (arg->spe == 'C' || arg->spe == 'c')
+		return (0);
+	else if (arg->spe == 'S' || arg->spe == 's')
+		return (0);
+	else if (arg->spe == 0)
+		return (0);
 	return (ft_letter_pars(arg->spe, arg));
 }
 

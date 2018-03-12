@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 18:27:43 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:04:19 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/12 16:44:49 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,42 +23,10 @@
 #define M_ZERO		0x10
 #define M_NZERO		0xef
 
-static int	ft_more_unsigned_cnt(t_ull n, t_arg *arg)
+static int	ft_more_unsigned_cnt(t_ull n, char cnt, t_arg *arg)
 {
- 	char	cnt;
 	int		len;
 
-	if (arg->spe == 'b' || arg->spe == 'B')
-		arg->base = 2;
-	cnt = (n == 0 && arg->acc == 0) ? 0 : ft_cntb(n, arg->base);
-	if (arg->acc != 0)
-		arg->acc = arg->acc > cnt ? arg->acc - cnt : -1;
-	cnt = (arg->flg & M_DIEZE) == M_DIEZE ? cnt + 2 : cnt;
-	arg->wth = arg->acc > 0 ? arg->wth - cnt - arg->acc : arg->wth - cnt;
-	arg->wth = arg->wth > 0 ? arg->wth : 0;
-	len = arg->acc > 0 ? arg->wth + cnt + arg->acc : arg->wth + cnt;
-	if (arg->base == 2)
-		return (ft_buff_bin(n, arg, cnt, len));
-	return (0);
-}
-
-static int	ft_unsigned_cnt(t_ull n, t_arg *arg)
-{
-	char	cnt;
-	int		len;
-
-	if (arg->spe == 'p' || arg->spe == 'x' || arg->spe == 'X')
-		arg->base = 16;
-	else if (arg->spe == 'o' || arg->spe == 'O')
-		arg->base = 8;
-	else if (arg->spe == 'u' || arg->spe == 'U')
-		arg->base = 10;
-	else
-		return (ft_more_unsigned_cnt(n, arg));
-	cnt = (n == 0 && arg->acc == 0) ? 0 : ft_cntb(n, arg->base);
-	if (arg->acc != 0)
-		arg->acc = arg->acc > cnt ? arg->acc - cnt : -1;
-	cnt = (arg->flg & M_DIEZE) == M_DIEZE ? cnt + 2 : cnt;
 	arg->wth = arg->acc > 0 ? arg->wth - cnt - arg->acc : arg->wth - cnt;
 	arg->wth = arg->wth > 0 ? arg->wth : 0;
 	len = arg->acc > 0 ? arg->wth + cnt + arg->acc : arg->wth + cnt;
@@ -68,7 +36,30 @@ static int	ft_unsigned_cnt(t_ull n, t_arg *arg)
 		return (ft_buff_udeci(n, arg, cnt, len));
 	else if (arg->base == 8)
 		return (ft_buff_octa(n, arg, cnt, len));
+	else if (arg->base == 2)
+		return (ft_buff_bin(n, arg, cnt, len));
 	return (0);
+}
+
+static int	ft_unsigned_cnt(t_ull n, t_arg *arg)
+{
+	char	cnt;
+
+	if (arg->spe == 'p' || arg->spe == 'x' || arg->spe == 'X')
+		arg->base = 16;
+	else if (arg->spe == 'o' || arg->spe == 'O')
+		arg->base = 8;
+	else if (arg->spe == 'u' || arg->spe == 'U')
+		arg->base = 10;
+	else if (arg->spe == 'b' || arg->spe == 'B')
+		arg->base = 2;
+	cnt = (n == 0 && arg->acc == 0) ? 0 : ft_ucntb(n, arg->base);
+	if (arg->acc != 0)
+		arg->acc = arg->acc > cnt ? arg->acc - cnt : -1;
+	if ((arg->base == 16 || arg->base == 8 || arg->base == 2)
+			&& ((M_DIEZE & arg->flg) == M_DIEZE))
+		cnt = arg->base == 8 ? cnt + 1 : cnt + 2;
+	return (ft_more_unsigned_cnt(n, cnt, arg));
 }
 
 int			ft_unsigned_pars(char const *s, int i, va_list va, t_arg *arg)
@@ -106,11 +97,14 @@ static int	ft_signed_cnt(long long n, t_arg *arg)
 	if (arg->acc != 0)
 		arg->acc = arg->acc > cnt ? arg->acc - cnt : -1;
 	if (n < 0)
+	{
 		cnt++;
+		arg->flg = (M_NSPACE & arg->flg);
+	}
 	else if ((arg->flg & M_MORE) == M_MORE)
 		cnt++;
 	arg->wth = arg->acc > 0 ? arg->wth - cnt - arg->acc : arg->wth - cnt;
-	arg->wth = arg->wth > 0 ? arg->wth : 0;
+	arg->wth = arg->wth < 1 && (M_SPACE & arg->flg) == M_SPACE ? 1 : arg->wth;
 	len = arg->acc > 0 ? arg->wth + cnt + arg->acc : arg->wth + cnt;
 	return (ft_buff_deci(n, arg, cnt, len));
 }

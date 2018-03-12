@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 16:37:29 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:20:12 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/12 16:01:35 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len)
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth);
-	ft_fill(NULL, NULL, 0);
+	ft_fill(buff, NULL, 0);
 	if (arg->spe != 'X')
 		return (ft_putstr_fd(buff, arg->fd));
 	else
@@ -57,7 +57,7 @@ int	ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len)
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
 		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
 		ft_fill(buff, " ", arg->wth);
-	if ((arg->flg & M_DIEZE) == M_DIEZE && n != 0)
+	if ((arg->flg & M_DIEZE) == M_DIEZE && (n != 0 || arg->acc == 0))
 		ft_fill(buff, "0", 1);
 	if (arg->acc > 0)
 		ft_fill(buff, "0", arg->acc);
@@ -68,7 +68,7 @@ int	ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len)
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth);
-	ft_fill(NULL, NULL, 0);
+	ft_fill(buff, NULL, 0);
 	return (ft_putstr_fd(buff, arg->fd));
 }
 
@@ -89,7 +89,7 @@ int	ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len)
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth);
-	ft_fill(NULL, NULL, 0);
+	ft_fill(buff, NULL, 0);
 	return (ft_putstr_fd(buff, arg->fd));
 }
 
@@ -112,7 +112,7 @@ int	ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len)
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth);
-	ft_fill(NULL, NULL, 0);
+	ft_fill(buff, NULL, 0);
 	if (arg->spe == 'b')
 		return (ft_putstr_fd(buff, arg->fd));
 	else

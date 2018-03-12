@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 17:04:25 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:18:45 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/06 12:11:07 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	ft_letter_buff(char *s, t_arg *arg, int len)
 	ft_fill(buff, s, 0);
 	if ((arg->flg & M_MINUS) == M_MINUS && arg->wth > 0)
 		ft_fill(buff, " ", arg->wth);
-	ft_fill(NULL, NULL, 0);
-	return (ft_putstr_fd(buff, arg->fd));
+	ft_fill(buff, NULL, 0);
+	return (write(arg->fd, buff, len));
 }
 
 int			ft_str_pars(char *s, t_arg *arg)
