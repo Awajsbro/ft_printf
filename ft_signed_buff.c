@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 16:36:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/12 16:45:13 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:48:20 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,36 @@ int	ft_buff_deci(long long n, t_arg *arg, char cnt, int len)
 	char	buff[len + 1];
 	char	out[cnt + 1];
 
+// ft_putnbr(cnt); ft_putendl(" --> cnt");
+// ft_putnbr(len); ft_putendl(" --> len");
+// ft_putendl("debut buffdeci");
+	if (M_SPACE == (M_SPACE & arg->flg))
+	{
+		ft_fill(buff, " ", 1);
+		(arg->wth)--;
+	}
 	if ((arg->flg & M_MINUS) != M_MINUS && arg->wth > 0
-		&& (arg->acc > 0 || (arg->flg & M_ZERO) != M_ZERO))
+		&& (arg->acc >= 0 || (arg->flg & M_ZERO) != M_ZERO))
 		ft_fill(buff, " ", arg->wth);
 	if (n < 0)
 		ft_fill(buff, "-", 1);
 	else if ((arg->flg & M_MORE) == M_MORE)
 		ft_fill(buff, "+", 1);
+// ft_putnbr(arg->acc); ft_putendl(" --> acc");
 	if (arg->acc > 0)
 		ft_fill(buff, "0", arg->acc);
+	else if (arg->acc == 0)
+		;
 	else if ((arg->flg & M_ZERO) == M_ZERO && arg->wth > 0)
 		ft_fill(buff, "0", arg->wth);
 	if (n != 0 || arg->acc != 0)
 		ft_itoab(n, 10, out);
+// ft_putnbr(arg->wth); ft_putendl(" --> wthd");
 	if (n < 0)
 		ft_fill(buff, &out[1], 0);
-	else
+	else if (n != 0 || arg->acc != 0)
 		ft_fill(buff, out, 0);
+// ft_putnbr(len); ft_putendl(" --> len");
 	if ((arg->wth > 0 && (arg->flg & M_MINUS) == M_MINUS)
 		&& ((arg->flg & M_ZERO) != M_ZERO || arg->acc > 0))
 		ft_fill(buff, " ", arg->wth);

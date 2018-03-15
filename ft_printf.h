@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/05 19:19:44 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/13 18:18:34 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct	s_arg
 	char		flg;
 	int			wth;
 	int			acc;
+	char		len;
 	char		spe;
 	char		base;
 	int			fd;

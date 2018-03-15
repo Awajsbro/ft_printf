@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 17:04:25 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/06 12:11:07 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:07:49 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static int	ft_letter_buff(char *s, t_arg *arg, int len)
 		else
 			ft_fill(buff, "0", arg->wth);
 	}
-	ft_fill(buff, s, 0);
+	if (s[0] == 0 && arg->spe == 'c')
+		ft_fill(buff, "\0", 1);
+	else
+		ft_fill(buff, s, 0);
 	if ((arg->flg & M_MINUS) == M_MINUS && arg->wth > 0)
 		ft_fill(buff, " ", arg->wth);
 	ft_fill(buff, NULL, 0);
@@ -44,24 +47,30 @@ static int	ft_letter_buff(char *s, t_arg *arg, int len)
 int			ft_str_pars(char *s, t_arg *arg)
 {
 	int		cnt;
+	char	cpy[ft_strlen(s) + 1];
 	char	nullstr[7];
 
 	if (s == NULL)
 	{
+// ft_putstr(s);
 		ft_strcpy(nullstr, "(null)");
+// ft_putnbr(cnt); ft_putendl(" --> cnt");
 		cnt = arg->acc < 0 ? 6 : ft_strnlen(nullstr, arg->acc);
 		nullstr[cnt] = 0;
 	}
 	else
 	{
 		cnt = arg->acc < 0 ? ft_strlen(s) : ft_strnlen(s, arg->acc);
-		s[cnt] = 0;
+		ft_strncpy(cpy, s, cnt);
 	}
+// ft_putstr(s); ft_putendl(" --> s");
+// ft_putnbr(cnt); ft_putendl(" --> cnt");
+// ft_putnbr(arg->wth); ft_putendl(" --> wth");
 	arg->wth = arg->wth - cnt;
 	arg->wth = arg->wth < 0 ? 0 : arg->wth;
 	if (s == NULL)
 		return (ft_letter_buff(nullstr, arg, (cnt + arg->wth)));
-	return (ft_letter_buff(s, arg, (cnt + arg->wth)));
+	return (ft_letter_buff(cpy, arg, (cnt + arg->wth)));
 }
 
 int			ft_letter_pars(int c, t_arg *arg)

@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/12 19:44:23 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/15 17:28:37 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,25 @@ static char	ft_get_flag(char const *s, int *i, t_arg *arg)
 			arg->flg = (arg->flg | M_DIEZE);
 		(*i)++;
 	}
-	arg->flg = (arg->flg & M_MORE) == M_MORE ? (arg->flg & M_NSPACE) : arg->flg;
 	return (arg->flg);
 }
 
 static int ft_get_with_n_accur(char const *s, int *i, va_list va)
 {
 	int	ret;
-
+// ft_putnbr(*i); ft_putendl(" --> entre get");
 	ret = 0;
-	while (s[++(*i)] == '*' || ft_isdigit(s[*i]) == 1)
+	while (s[(*i)] == '*' || ft_isdigit(s[*i]) == 1)
 	{
-		if (s[*i] == '*')
+// ft_putnbr(*i); ft_putendl(" --> enterer while");
+		if (s[(*i)++] == '*')
 			ret = va_arg(va, int);
 		else
 		{
+			(*i)--;
+// ft_putnbr(*i); ft_putendl(" --> avant atoi");
 			ret = ft_atoi(&s[*i]);
-			while (ft_isdigit(s[*i + 1]) == 1)
+			while (ft_isdigit(s[*i]) == 1)
 				(*i)++;
 		}
 	}
@@ -71,19 +73,18 @@ static void	ft_get_arg(char const *s, int *i, va_list va, t_arg *arg)
 				|| ft_isdigit(s[*i]) == 1)
 	{
 		arg->flg = ft_get_flag(s, i, arg);
-ft_putnbr(*i);
-		if (ft_isdigit(s[*i]) == 1 || s[*i--] == '*')
+// ft_putnbr(*i); ft_putendl(" --> avant if");
+		if (ft_isdigit(s[(*i)]) == 1 || s[(*i)] == '*')
 			arg->wth = ft_get_with_n_accur(s, i, va);
-		else
-			(*i)++;
-ft_putnbr(*i);
-		if (s[*i] == '.')
+// ft_putnbr(arg->wth); ft_putendl(" --> sortie get");
+		if (s[(*i)++] == '.')
 			arg->acc = ft_get_with_n_accur(s, i, va);
+		else
+			(*i)--;
 		while (s[*i] == 'h' || s[*i] == 'l' || s[*i] == 'j' || s[*i] == 'z'
 			|| s[*i] == 't' || s[*i] == 'L')
 			(*i)++;
 	}
-	ft_putnbr(*i);
 }
 
 static void ft_init_arg(char const *s, int *i, va_list va, t_arg *arg)
@@ -91,14 +92,12 @@ static void ft_init_arg(char const *s, int *i, va_list va, t_arg *arg)
 	arg->flg = 0;
 	arg->wth = 0;
 	arg->acc = -1;
-ft_putnbr(*i);
 	ft_get_arg(s, i, va, arg);
-ft_putnbr(*i);
 	arg->spe = (s[(*i)++]);
-ft_putchar(arg->spe); ft_putendl(" --> specifiere");
 // ft_putnbr(arg->flg); ft_putendl(" --> flag");
-ft_putnbr(arg->wth); ft_putendl(" --> wth");
-// ft_putnbr(arg->acc); ft_putendl(" --> acc");
+// ft_putnbr(arg->wth); ft_putendl(" --> with");
+// ft_putnbr(arg->acc); ft_putendl(" --> acuura");
+// ft_putchar(arg->spe); ft_putendl(" --> specif");
 	if (arg->spe == 0)
 		(*i)--;
 	if (arg->wth < 0)
@@ -106,8 +105,10 @@ ft_putnbr(arg->wth); ft_putendl(" --> wth");
 		arg->wth = -1 * (arg->wth);
 		arg->flg = (arg->flg | M_MINUS);
 	}
-	if ((arg->flg & M_MINUS) == M_MINUS || (arg->flg & M_SPACE) == M_SPACE)
+	if ((arg->flg & M_MINUS) == M_MINUS || arg->acc > -1)
 		arg->flg = (arg->flg & M_NZERO);
+	if ((arg->flg & M_MORE) == M_MORE)
+		arg->flg = (arg->flg & M_NSPACE);
 }
 
 static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
@@ -118,6 +119,7 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 	else if (s[*i] == '[')
 		return (ft_define_fd(s, i, va, arg));
 	ft_init_arg(s, i, va, arg);
+// ft_putendl("pourauoi ca marche pas");
 	if (arg->spe == '%')
 		return (ft_letter_pars('%', arg));
 	else if (arg->spe == 'x' || arg->spe == 'X' || arg->spe == 'p'
