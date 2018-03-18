@@ -6,7 +6,7 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/28 16:56:20 by awajsbro          #+#    #+#              #
-#    Updated: 2018/03/12 16:45:47 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/03/18 16:15:46 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,13 @@ NAME = libftprintf.a
 TMP = tmp.a
 
 SRC 	=	ft_printf.c \
+			ft_init_arg.c \
 			ft_signed_buff.c \
 			ft_unsigned_buff.c \
 			ft_print_setup.c \
 			ft_pars_color.c \
 			ft_letter_buff.c \
+			ft_buff_charcode.c \
 			ft_length_pars.c \
 			ft_change_color.c \
 			ft_change_back.c \

@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 18:27:43 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/15 17:13:15 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/18 11:27:08 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 #define M_NSPACE	0xf7
 #define M_ZERO		0x10
 #define M_NZERO		0xef
+#define PF_LEN_NONE	0
+#define PF_LEN_HH	1
+#define PF_LEN_H	2
+#define PF_LEN_Z	3
+#define PF_LEN_T	4
+#define PF_LEN_J	5
+#define PF_LEN_L	6
+#define PF_LEN_LL	7
 
 static int	ft_more_unsigned_cnt(t_ull n, char cnt, t_arg *arg)
 {
@@ -57,32 +65,32 @@ static int	ft_unsigned_cnt(t_ull n, t_arg *arg)
 	if (arg->acc != 0)
 		arg->acc = arg->acc > cnt ? arg->acc - cnt : -1;
 	if ((arg->base == 16 || arg->base == 8 || arg->base == 2)
-			&& ((M_DIEZE & arg->flg) == M_DIEZE))
+			&& ((M_DIEZE & arg->flg) == M_DIEZE) && (n != 0 || arg->spe == 'p'))
 		cnt = arg->base == 8 ? cnt + 1 : cnt + 2;
 	return (ft_more_unsigned_cnt(n, cnt, arg));
 }
 
-int			ft_unsigned_pars(char const *s, int i, va_list va, t_arg *arg)
+int			ft_unsigned_pars(va_list va, t_arg *arg)
 {
 	arg->flg = (arg->flg & M_NMORE);
-	if (s[i - 1] == 'p')
+	if (arg->spe == 'p')
 	{
 		arg->flg = (arg->flg | M_DIEZE);
 		return (ft_unsigned_cnt((long long)va_arg(va, void*), arg));
 	}
-	else if (s[i - 2] == 'l' && s[i - 3] == 'l')
+	else if (arg->len == PF_LEN_LL)
 		return (ft_unsigned_cnt(va_arg(va, t_ull), arg));
-	else if (s[i - 2] == 'l' || arg->spe == 'O' || arg->spe == 'U')
+	else if (arg->len == PF_LEN_L || arg->spe == 'O' || arg->spe == 'U')
 		return (ft_unsigned_cnt(va_arg(va, unsigned long), arg));
-	else if (s[i - 2] == 'h' && s[i - 3] != 'h')
+	else if (arg->len == PF_LEN_H)
 		return (ft_unsigned_cnt((unsigned short)va_arg(va, int), arg));
-	else if (s[i - 2] == 'h')
+	else if (arg->len == PF_LEN_HH)
 		return (ft_unsigned_cnt((unsigned char)va_arg(va, int), arg));
-	else if (s[i - 2] == 'j')
+	else if (arg->len == PF_LEN_J)
 		return (ft_unsigned_cnt(va_arg(va, uintmax_t), arg));
-	else if (s[i - 2] == 'z')
+	else if (arg->len == PF_LEN_Z)
 		return (ft_unsigned_cnt(va_arg(va, size_t), arg));
-	else if (s[i - 2] == 't')
+	else if (arg->len == PF_LEN_T)
 		return (ft_unsigned_cnt(va_arg(va, ptrdiff_t), arg));
 	return (ft_unsigned_cnt(va_arg(va, unsigned int), arg));
 }
@@ -109,21 +117,21 @@ static int	ft_signed_cnt(long long n, t_arg *arg)
 	return (ft_buff_deci(n, arg, cnt, len));
 }
 
-int			ft_signed_pars(char const *s, int i, va_list va, t_arg *arg)
+int			ft_signed_pars(va_list va, t_arg *arg)
 {
-	if (s[i - 2] == 'l' && s[i - 3] == 'l')
+	if (arg->len == PF_LEN_LL)
 		return (ft_signed_cnt(va_arg(va, long long), arg));
-	else if (s[i - 2] == 'l' || arg->spe == 'D')
+	else if (arg->len == PF_LEN_L || arg->spe == 'D')
 		return (ft_signed_cnt(va_arg(va, long), arg));
-	else if (s[i - 2] == 'h' && s[i - 3] != 'h')
+	else if (arg->len == PF_LEN_H)
 		return (ft_signed_cnt((short)va_arg(va, int), arg));
-	else if (s[i - 2] == 'h')
+	else if (arg->len == PF_LEN_HH)
 		return (ft_signed_cnt((signed char)va_arg(va, int), arg));
-	else if (s[i - 2] == 'j')
+	else if (arg->len == PF_LEN_J)
 		return (ft_signed_cnt(va_arg(va, intmax_t), arg));
-	else if (s[i - 2] == 'z')
+	else if (arg->len == PF_LEN_Z)
 		return (ft_signed_cnt(va_arg(va, size_t), arg));
-	else if (s[i - 2] == 't')
+	else if (arg->len == PF_LEN_T)
 		return (ft_signed_cnt(va_arg(va, ptrdiff_t), arg));
 	return (ft_signed_cnt(va_arg(va, int), arg));
 }

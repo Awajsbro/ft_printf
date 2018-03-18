@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/13 18:18:34 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/18 16:07:47 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 
 # include <stdarg.h>
+# include <wchar.h>
 # include "libft/libft.h"
 
 typedef unsigned long long t_ull;
@@ -38,14 +39,16 @@ typedef struct	s_col
 }				t_col;
 
 int				ft_printf(char const *s, ...);
+void			ft_init_arg(char const *s, int *i, va_list va, t_arg *arg);
 int				ft_letter_pars(int c, t_arg *arg);
+int				ft_charcode(wint_t c, t_arg *arg);
 int				ft_str_pars(char *s, t_arg *arg);
-int				ft_unsigned_pars(char const *s, int i, va_list va, t_arg *arg);
+int				ft_unsigned_pars(va_list va, t_arg *arg);
 int				ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len);
-int				ft_signed_pars(char const *s, int i, va_list va, t_arg *arg);
+int				ft_signed_pars(va_list va, t_arg *arg);
 int				ft_buff_deci(long long n, t_arg *arg, char cnt, int len);
 char			ft_define_fd(char const *s, int *i, va_list va, t_arg *arg);
 int				ft_fill(char *s, char *s2, int len);

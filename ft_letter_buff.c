@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 17:04:25 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/15 16:07:49 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/18 16:32:11 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ int			ft_str_pars(char *s, t_arg *arg)
 
 	if (s == NULL)
 	{
-// ft_putstr(s);
 		ft_strcpy(nullstr, "(null)");
-// ft_putnbr(cnt); ft_putendl(" --> cnt");
 		cnt = arg->acc < 0 ? 6 : ft_strnlen(nullstr, arg->acc);
 		nullstr[cnt] = 0;
 	}
@@ -63,9 +61,6 @@ int			ft_str_pars(char *s, t_arg *arg)
 		cnt = arg->acc < 0 ? ft_strlen(s) : ft_strnlen(s, arg->acc);
 		ft_strncpy(cpy, s, cnt);
 	}
-// ft_putstr(s); ft_putendl(" --> s");
-// ft_putnbr(cnt); ft_putendl(" --> cnt");
-// ft_putnbr(arg->wth); ft_putendl(" --> wth");
 	arg->wth = arg->wth - cnt;
 	arg->wth = arg->wth < 0 ? 0 : arg->wth;
 	if (s == NULL)

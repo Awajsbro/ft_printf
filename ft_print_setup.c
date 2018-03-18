@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 18:23:24 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/13 19:34:29 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/18 11:26:34 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int		ft_fill(char *s, char *s2, int len)
 {
 	static int	i = 0;
 
-// ft_putendl("coucou");
 	if (len > 0)
 	{
 		len = len + i;
