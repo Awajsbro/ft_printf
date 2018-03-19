@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/18 14:11:54 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/19 18:39:59 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 		return (arg->spe != 'c' ? ft_str_pars(va_arg(va, char*), arg)
 			: ft_letter_pars(va_arg(va, int), arg));
 	else if (arg->spe == 'C' || arg->spe == 'c')
-		return (ft_charcode(va_arg(va, wint_t), arg));
+		return (ft_wchar_pars(va_arg(va, wint_t), arg));
 	else if (arg->spe == 'S' || arg->spe == 's')
-		return (0);
+		return (ft_wstr_pars(va_arg(va, wchar_t*), arg));
 	else if (arg->spe == 0)
 		return (0);
 	return (ft_letter_pars(arg->spe, arg));

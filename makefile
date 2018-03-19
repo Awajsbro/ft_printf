@@ -6,7 +6,7 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/28 16:56:20 by awajsbro          #+#    #+#              #
-#    Updated: 2018/03/18 16:15:46 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/03/19 17:51:59 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC 	=	ft_printf.c \
 			ft_print_setup.c \
 			ft_pars_color.c \
 			ft_letter_buff.c \
-			ft_buff_charcode.c \
+			ft_wchar_pars.c \
+			ft_wstr_pars.c \
 			ft_length_pars.c \
 			ft_change_color.c \
 			ft_change_back.c \
