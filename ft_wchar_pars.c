@@ -5,71 +5,60 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/18 14:08:53 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/19 18:48:23 by awajsbro         ###   ########.fr       */
+/*   Created: 2018/03/19 12:41:46 by awajsbro          #+#    #+#             */
+/*   Updated: 2018/03/20 18:39:59 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-#define PF_6FIRST 0x3f
-#define PF_WEAK_BYT 0x80
-#define PF_MSB_2BYT 0xc0
-#define PF_MSB_3BYT 0xe0
-#define PF_MSB_4BYT 0xf0
 #define PF_1BYT_MAX 0x80
 #define PF_2BYT_MAX 0x800
 #define PF_3BYT_MAX 0x10000
 
-char	*ft_cut_char(wint_t c, char *s)
+static int		ft_wtos(wchar_t *ws, size_t len, t_arg *arg)
 {
-	ft_bzero(&s[1], 3);
-	if (c < PF_1BYT_MAX)
-		s[0] = c;
-	else if (c < PF_2BYT_MAX)
+	char	s[len + 1];
+	size_t	bytlen;
+
+	len = 0;
+	if (arg->spe == 'c' || arg->spe == 'C')
 	{
-		s[1] = (PF_WEAK_BYT | (PF_6FIRST & c));
-		s[0] = (PF_MSB_2BYT | (c >> 6));
-	}
-	else if (c < PF_3BYT_MAX)
-	{
-		s[2] = (PF_WEAK_BYT | (PF_6FIRST & c));
-		s[1] = (PF_WEAK_BYT | (PF_6FIRST & (c >> 6)));
-		s[0] = (PF_MSB_3BYT | (PF_6FIRST & (c >> 12)));
+		if ((bytlen = ft_wcharlen(*ws)) <= (size_t)arg->acc)
+			ft_cut_char(*ws, s);
 	}
 	else
 	{
-		s[3] = (PF_WEAK_BYT | (PF_6FIRST & c));
-		s[2] = (PF_WEAK_BYT | (PF_6FIRST & (c >> 6)));
-		s[1] = (PF_WEAK_BYT | (PF_6FIRST & (c >> 12)));
-		s[0] = (PF_MSB_4BYT | (PF_6FIRST & (c >> 18)));
+		while (*ws)
+		{
+			bytlen = ft_wcharlen(*ws);
+			if ((bytlen + len) <= (size_t)arg->acc)
+			{
+				ft_cut_char(*ws, &s[len]);
+				len = len + bytlen;
+			}
+			ws++;
+		}
 	}
-	return (s);
+	return (ft_str_pars(s, arg));
 }
 
-size_t	ft_wcharlen(wchar_t ws)
+int				ft_wstr_pars(wchar_t *ws, t_arg *arg)
 {
-	if (ws < PF_1BYT_MAX)
-		return (1);
-	else if (ws < PF_2BYT_MAX)
-		return (2);
-	else if (ws < PF_3BYT_MAX)
-		return (3);
-	else
-		return (4);
+	size_t	len;
+
+	if (!ws)
+		return (ft_str_pars(NULL, arg));
+	if ((len = ft_wstrbytlen(ws)) == 1)
+		return (ft_letter_pars((char)ws[0], arg));
+	return (ft_wtos(ws, len, arg));
 }
 
-size_t	ft_wstrbytlen(wchar_t *ws)
+int				ft_wchar_pars(wint_t c, t_arg *arg)
 {
-	int		bytlen;
-
-	if  (ws == NULL)
+	if (c < 0)
 		return (0);
-	bytlen = 0;
-	while(*ws)
-	{
-		bytlen = bytlen + ft_wcharlen(*ws);
-		ws++;
-	}
-	return (bytlen);
+	if (c < PF_1BYT_MAX)
+		return (ft_letter_pars((char)c, arg));
+	return (ft_wtos(&c, ft_wcharlen(c), arg));
 }

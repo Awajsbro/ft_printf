@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 18:27:43 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/18 11:27:08 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/20 17:11:21 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ static int	ft_unsigned_cnt(t_ull n, t_arg *arg)
 
 int			ft_unsigned_pars(va_list va, t_arg *arg)
 {
+	if ((arg->flg & M_MINUS) == M_MINUS || (arg->acc > -1))
+		arg->flg = (arg->flg & M_NZERO);
 	arg->flg = (arg->flg & M_NMORE);
 	if (arg->spe == 'p')
 	{
@@ -119,6 +121,8 @@ static int	ft_signed_cnt(long long n, t_arg *arg)
 
 int			ft_signed_pars(va_list va, t_arg *arg)
 {
+	if ((arg->flg & M_MINUS) == M_MINUS || (arg->acc > -1))
+		arg->flg = (arg->flg & M_NZERO);
 	if (arg->len == PF_LEN_LL)
 		return (ft_signed_cnt(va_arg(va, long long), arg));
 	else if (arg->len == PF_LEN_L || arg->spe == 'D')

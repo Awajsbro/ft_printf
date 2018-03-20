@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 14:21:48 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/18 16:38:22 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/20 17:10:15 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,6 @@ void		ft_init_arg(char const *s, int *i, va_list va, t_arg *arg)
 		arg->wth = -1 * (arg->wth);
 		arg->flg = (arg->flg | M_MINUS);
 	}
-	if ((arg->flg & M_MINUS) == M_MINUS || (arg->acc > -1
-		&& (arg->spe != 'c' && arg->spe != 's' && arg->spe != '%')))
-		arg->flg = (arg->flg & M_NZERO);
 	if ((arg->flg & M_MORE) == M_MORE)
 		arg->flg = (arg->flg & M_NSPACE);
 }

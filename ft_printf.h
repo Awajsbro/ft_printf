@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/19 17:52:54 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/20 15:38:42 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ typedef struct	s_col
 
 int				ft_printf(char const *s, ...);
 void			ft_init_arg(char const *s, int *i, va_list va, t_arg *arg);
-int				ft_letter_pars(int c, t_arg *arg);
-int				ft_wchar_pars(wint_t c, t_arg *arg);
-char	*ft_cut_char(wint_t c, char *s);
-size_t	ft_wstrbytlen(wchar_t *ws);
-size_t	ft_wcharlen(wchar_t ws);
-int				ft_wstr_pars(wchar_t *ws, t_arg *arg);
-int				ft_str_pars(char *s, t_arg *arg);
+char			ft_define_fd(char const *s, int *i, va_list va, t_arg *arg);
+int				ft_signed_pars(va_list va, t_arg *arg);
+int				ft_buff_deci(long long n, t_arg *arg, char cnt, int len);
 int				ft_unsigned_pars(va_list va, t_arg *arg);
 int				ft_buff_exa(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_buff_octa(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_buff_udeci(t_ull n, t_arg *arg, char cnt, int len);
 int				ft_buff_bin(t_ull n, t_arg *arg, char cnt, int len);
-int				ft_signed_pars(va_list va, t_arg *arg);
-int				ft_buff_deci(long long n, t_arg *arg, char cnt, int len);
-char			ft_define_fd(char const *s, int *i, va_list va, t_arg *arg);
+int				ft_letter_pars(int c, t_arg *arg);
+int				ft_str_pars(char *s, t_arg *arg);
+int				ft_wchar_pars(wint_t c, t_arg *arg);
+int				ft_wstr_pars(wchar_t *ws, t_arg *arg);
+size_t			ft_wcharlen(wchar_t ws);
+size_t			ft_wstrbytlen(wchar_t *ws);
+char			*ft_cut_char(wint_t c, char *s);
 int				ft_fill(char *s, char *s2, int len);
 char			ft_pars_color(char const *s, int *i, int fd);
 char			ft_printf_color(char const *s, int *i, t_col *col, char m);

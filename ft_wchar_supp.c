@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_buff_charcode.c                                 :+:      :+:    :+:   */
+/*   ft_wchar_supp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 14:08:53 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/18 17:16:36 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/20 15:40:57 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@
 #define PF_2BYT_MAX 0x800
 #define PF_3BYT_MAX 0x10000
 
-static int	ft_cut_char(wint_t c, char *s, t_arg *arg)
+char	*ft_cut_char(wint_t c, char *s)
 {
-	if (c >= PF_1BYT_MAX && c < PF_2BYT_MAX)
+	s[1] = 0;
+	if (c < PF_1BYT_MAX)
+		s[0] = c;
+	else if (c < PF_2BYT_MAX)
 	{
 		s[2] = 0;
 		s[1] = (PF_WEAK_BYT | (PF_6FIRST & c));
 		s[0] = (PF_MSB_2BYT | (c >> 6));
 	}
-	else if (c >= PF_2BYT_MAX && c < PF_3BYT_MAX)
+	else if (c < PF_3BYT_MAX)
 	{
 		s[3] = 0;
 		s[2] = (PF_WEAK_BYT | (PF_6FIRST & c));
@@ -44,19 +47,32 @@ static int	ft_cut_char(wint_t c, char *s, t_arg *arg)
 		s[1] = (PF_WEAK_BYT | (PF_6FIRST & (c >> 12)));
 		s[0] = (PF_MSB_4BYT | (PF_6FIRST & (c >> 18)));
 	}
-	return (ft_str_pars(s, arg));
+	return (s);
 }
 
-int			ft_charcode(wint_t c, t_arg *arg)
+size_t	ft_wcharlen(wchar_t ws)
 {
-	char	s[5];
+	if (ws < PF_1BYT_MAX)
+		return (1);
+	else if (ws < PF_2BYT_MAX)
+		return (2);
+	else if (ws < PF_3BYT_MAX)
+		return (3);
+	else
+		return (4);
+}
 
-	if (c < 0)
+size_t	ft_wstrbytlen(wchar_t *ws)
+{
+	int		bytlen;
+
+	if (ws == NULL)
 		return (0);
-	if (c < PF_1BYT_MAX)
+	bytlen = 0;
+	while (*ws)
 	{
-		s[0] = c;
-		return (ft_letter_pars(s[0], arg));
+		bytlen = bytlen + ft_wcharlen(*ws);
+		ws++;
 	}
-	return (ft_cut_char(c, s, arg));
+	return (bytlen);
 }
