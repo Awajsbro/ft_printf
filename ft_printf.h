@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:56:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/20 15:38:42 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/22 10:44:19 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int				ft_fill(char *s, char *s2, int len);
 char			ft_pars_color(char const *s, int *i, int fd);
 char			ft_printf_color(char const *s, int *i, t_col *col, char m);
 char			ft_printf_back(char const *s, int *i, t_col *col, char m);
+int				ft_print_itab(va_list va, t_arg *arg);
 
 /*
 ** {state_gras}	 =	\033[01m --	active le gras

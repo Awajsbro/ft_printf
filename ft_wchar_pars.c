@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/19 12:41:46 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/20 18:39:59 by awajsbro         ###   ########.fr       */
+/*   Created: 2018/03/21 16:59:41 by awajsbro          #+#    #+#             */
+/*   Updated: 2018/03/21 18:12:45 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int		ft_wtos(wchar_t *ws, size_t len, t_arg *arg)
 	size_t	bytlen;
 
 	len = 0;
+	s[0] = 0;
 	if (arg->spe == 'c' || arg->spe == 'C')
 	{
-		if ((bytlen = ft_wcharlen(*ws)) <= (size_t)arg->acc)
-			ft_cut_char(*ws, s);
+		ft_cut_char(*ws, s);
 	}
 	else
 	{
@@ -54,11 +54,11 @@ int				ft_wstr_pars(wchar_t *ws, t_arg *arg)
 	return (ft_wtos(ws, len, arg));
 }
 
-int				ft_wchar_pars(wint_t c, t_arg *arg)
+int				ft_wchar_pars(wint_t wi, t_arg *arg)
 {
-	if (c < 0)
+	if (wi < 0)
 		return (0);
-	if (c < PF_1BYT_MAX)
-		return (ft_letter_pars((char)c, arg));
-	return (ft_wtos(&c, ft_wcharlen(c), arg));
+	if (wi < PF_1BYT_MAX)
+		return (ft_letter_pars((char)wi, arg));
+	return (ft_wtos(&wi, ft_wcharlen(wi), arg));
 }

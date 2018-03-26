@@ -6,7 +6,7 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/28 16:56:20 by awajsbro          #+#    #+#              #
-#    Updated: 2018/03/20 13:44:19 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/03/22 10:49:42 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC 	=	ft_printf.c \
 			ft_length_pars.c \
 			ft_change_color.c \
 			ft_change_back.c \
+			ft_print_itab.c
 
 OBJ = $(SRC:.c=.o)
 

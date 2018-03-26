@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:55:44 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/19 18:39:59 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/22 14:26:46 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ static int	ft_pars_type(char const *s, int *i, va_list va, t_arg *arg)
 	else if (s[*i] == '[')
 		return (ft_define_fd(s, i, va, arg));
 	ft_init_arg(s, i, va, arg);
-	if (arg->spe == '%')
-		return (ft_letter_pars('%', arg));
-	else if (arg->spe == 'x' || arg->spe == 'X' || arg->spe == 'p'
+	if (arg->spe == '?')
+		return (ft_print_itab(va, arg));
+	if (arg->spe == 'x' || arg->spe == 'X' || arg->spe == 'p'
 		|| arg->spe == 'U' || arg->spe == 'u' || arg->spe == 'o'
 			|| arg->spe == 'O' || arg->spe == 'b' || arg->spe == 'B')
 		return (ft_unsigned_pars(va, arg));
 	else if (arg->spe == 'd' || arg->spe == 'D' || arg->spe == 'i')
 		return (ft_signed_pars(va, arg));
-	else if ((arg->spe == 'c' || arg->spe == 's') && arg->len != PF_LEN_L)
+	if ((arg->spe == 'c' || arg->spe == 's') && arg->len != PF_LEN_L)
 		return (arg->spe != 'c' ? ft_str_pars(va_arg(va, char*), arg)
 			: ft_letter_pars(va_arg(va, int), arg));
 	else if (arg->spe == 'C' || arg->spe == 'c')

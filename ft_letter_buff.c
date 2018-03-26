@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 17:04:25 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/18 16:32:11 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/21 18:03:27 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int			ft_str_pars(char *s, t_arg *arg)
 	}
 	else
 	{
-		cnt = arg->acc < 0 ? ft_strlen(s) : ft_strnlen(s, arg->acc);
+		if (arg->acc < 0 || arg->spe == 'C' || arg->spe == 'c')
+			cnt = ft_strlen(s);
+		else
+			cnt = ft_strnlen(s, arg->acc);
 		ft_strncpy(cpy, s, cnt);
 	}
 	arg->wth = arg->wth - cnt;

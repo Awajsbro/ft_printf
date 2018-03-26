@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 14:08:53 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/03/20 15:40:57 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/03/21 16:36:45 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ char	*ft_cut_char(wint_t c, char *s)
 
 size_t	ft_wcharlen(wchar_t ws)
 {
-	if (ws < PF_1BYT_MAX)
+	if (ws == 0)
+		return (0);
+	else if (ws < PF_1BYT_MAX)
 		return (1);
 	else if (ws < PF_2BYT_MAX)
 		return (2);
